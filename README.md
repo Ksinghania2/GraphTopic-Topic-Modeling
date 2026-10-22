@@ -8,13 +8,13 @@ belong together. Every community is a **topic**; documents get topic distributio
 
 ## Install
 ```bash
-pip install -r requirements.txt          # numpy scipy networkx scikit-learn matplotlib Flask
+python -m pip install -e ".[dev]"
 ```
 
 ## Run
 | What | Command |
 |---|---|
-| Web app (front page, upload/paste, live inference) | `python app.py`  →  http://127.0.0.1:5000 |
+| Web app (Waitress server, front page, upload/paste, live inference) | `python app.py`  →  http://127.0.0.1:5000 |
 | CLI on built-in labelled demo corpus | `python run_pipeline.py --demo` |
 | CLI on your own CSV | `python run_pipeline.py --input docs.csv --text-col body` |
 | CLI on a folder of `.txt` files | `python run_pipeline.py --input ./texts` |
@@ -24,6 +24,23 @@ pip install -r requirements.txt          # numpy scipy networkx scikit-learn mat
 
 Useful flags: `--window 8` (co-occurrence window), `--resolution 1.0` (higher → more, finer topics),
 `--method louvain|greedy_modularity|label_propagation`, `--topn 10`, `--max-vocab 3000`.
+
+## Web deployment notes
+The app uses Waitress rather than Flask's development server. It listens on `127.0.0.1:5000`
+by default. Configure `HOST` and `PORT` with environment variables if needed; for example, in
+PowerShell:
+
+```powershell
+$env:HOST = "127.0.0.1"
+$env:PORT = "8000"
+python app.py
+```
+
+Uploaded and pasted input is limited to 25 MB and 12,000 documents per analysis. The web app
+is still a single-instance research tool: fitted models and inference sessions are kept in
+process memory, and analysis is CPU-intensive. Before exposing it to untrusted users, put it
+behind an HTTPS reverse proxy with authentication and rate limiting, and monitor its memory
+and CPU use. Do not bind to `0.0.0.0` on an untrusted network without those protections.
 
 ## Python API
 ```python
