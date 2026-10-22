@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Results – GraphTopic</title><link rel="stylesheet" href="/static/style.css"></head><body>
+<header><div class="wrap"><span class="pill">Results</span><h1>{{ s.n_topics }} topics from {{ "{:,}".format(n_docs) }} documents</h1>
+<p><a href="/" style="color:#fff">&larr; New analysis</a></p></div></header><div class="wrap">
+<div class="card"><h2>Graph &amp; quality summary</h2><div class="stats">
+<div class="stat"><b>{{ s.n_nodes }}</b><span>words (nodes)</span></div><div class="stat"><b>{{ "{:,}".format(s.n_edges) }}</b><span>edges</span></div>
+<div class="stat"><b>{{ s.modularity }}</b><span>modularity Q</span></div><div class="stat"><b>{{ "%.3f"|format(ev.npmi_coherence) }}</b><span>NPMI coherence</span></div>
+<div class="stat"><b>{{ "%.2f"|format(ev.diversity) }}</b><span>topic diversity</span></div>
+{% if has_labels %}<div class="stat"><b>{{ "%.3f"|format(ev.nmi) }}</b><span>NMI vs labels</span></div><div class="stat"><b>{{ "%.1f"|format(ev.purity*100) }}%</b><span>purity</span></div>{% endif %}
+<div class="stat"><b>{{ s.timing.total }}s</b><span>total fit time</span></div></div></div>
+<div class="card"><h2>Extracted topics</h2><div class="topics">
+{% for t in topics %}<div class="topic" style="border-left-color:hsl({{ (t.id*47)%360 }},65%,45%)"><h3>Topic {{ t.id }} · {{ t.label.replace('_',' ') }}</h3>
+<small>{{ t.docs }} documents · {{ t.n_words }} words · NPMI {{ t.npmi }}</small><div style="margin-top:6px">
+{% for w,sc in t.words %}<span class="chip">{{ w.replace('_',' ') }}</span>{% endfor %}</div></div>{% endfor %}</div></div>
+<div class="card"><h2>Word network</h2><img src="data:image/png;base64,{{ net }}" alt="network"></div>
+<div class="card"><h2>Top-word scores per topic</h2><img src="data:image/png;base64,{{ bars }}" alt="bars"></div>
+{% if bridge %}<div class="card"><h2>Bridge words (shared across topics)</h2><p class="hint">Words whose co-occurrence edges are spread over several communities.</p>
+{% for w,p,ts in bridge %}<span class="chip">{{ w.replace('_',' ') }} · {{ "%.2f"|format(p) }}</span>{% endfor %}</div>{% endif %}
+<div class="card"><h2>Try a new document</h2><textarea id="txt" placeholder="Type or paste a document to see its topic distribution…" style="min-height:90px"></textarea>
+<button onclick="inf()">Infer topics</button><div id="out" style="margin-top:12px"></div></div></div>
+<script>async function inf(){const o=document.getElementById('out');const r=await fetch('/infer/{{ token }}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:document.getElementById('txt').value})});const j=await r.json();
+if(j.error){o.innerHTML='<div class="err">'+j.error+'</div>';return}o.innerHTML=j.topics.map(t=>'<div>Topic '+t.id+' · '+t.label+' <b>'+(t.p*100).toFixed(1)+'%</b><div class="bar" style="width:'+t.p*100+'%"></div></div>').join('')}</script></body></html>

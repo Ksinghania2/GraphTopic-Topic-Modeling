@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GraphTopic – Topic extraction with word-network communities</title><link rel="stylesheet" href="/static/style.css"></head><body>
+<header><div class="wrap"><span class="pill">Mini Project · Manipal University Jaipur</span>
+<h1>GraphTopic</h1><p>Graph-based topic extraction from large text corpora: word co-occurrence network &rarr; community detection &rarr; topics.</p></div></header>
+<div class="wrap">
+<form class="card" method="post" action="/analyze" enctype="multipart/form-data">
+<h2>1 · Choose a corpus</h2>
+<div class="tabs">
+ <label><input type="radio" name="source" value="sample" checked onchange="sw()"><span>Sample news corpus (12,000 docs)</span></label>
+ <label><input type="radio" name="source" value="upload" onchange="sw()"><span>Upload CSV / TXT</span></label>
+ <label><input type="radio" name="source" value="paste" onchange="sw()"><span>Paste text</span></label></div>
+<div id="p-sample" class="hint">Labelled synthetic news-style corpus across 10 subjects (space, medicine, sports, finance, AI, climate, food, politics, education, travel). Fast demo – completes in a few seconds and reports accuracy against the known labels.</div>
+<div id="p-upload" style="display:none"><label>File (.csv with a text column, or .txt with documents separated by blank lines)</label><input type="file" name="file" accept=".csv,.txt">
+ <label>CSV text column</label><input type="text" name="text_col" value="text"></div>
+<div id="p-paste" style="display:none"><label>Documents (separate documents by a blank line, at least 20)</label><textarea name="text" placeholder="Paste your documents here…"></textarea></div>
+<h2 style="margin-top:22px">2 · Parameters</h2>
+<div class="grid"><div><label>Co-occurrence window (tokens)</label><input type="number" name="window" value="8" min="2" max="40"></div>
+<div><label>Louvain resolution γ</label><input type="number" step="0.1" name="resolution" value="1.0" min="0.1" max="5"></div>
+<div><label>Top words per topic</label><input type="number" name="topn" value="10" min="5" max="20"></div></div>
+<p class="hint">Larger window → denser graph. Lower γ → fewer, broader topics; higher γ → more, finer topics.</p>
+{% if error %}<div class="err">{{ error }}</div>{% endif %}
+<button type="submit">Extract topics</button></form>
+<div class="card"><h2>How it works</h2><div class="grid">
+<div><b>1. Clean</b><p class="hint">Tokenise, remove stop-words, lemmatise, detect phrases.</p></div>
+<div><b>2. Build graph</b><p class="hint">Words are nodes; edges carry NPMI of sliding-window co-occurrence.</p></div>
+<div><b>3. Detect communities</b><p class="hint">Louvain finds densely connected word groups – each is a topic.</p></div>
+<div><b>4. Infer</b><p class="hint">Documents receive topic distributions from word memberships.</p></div></div></div></div>
+<footer>Department of Computer and Communication Engineering · Manipal University Jaipur</footer>
+<script>function sw(){const v=document.querySelector('[name=source]:checked').value;for(const k of['sample','upload','paste'])document.getElementById('p-'+k).style.display=k===v?'block':'none'}</script></body></html>

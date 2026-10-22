@@ -1,0 +1,725 @@
+{
+ "dataset": {
+  "n_docs": 12000,
+  "n_tokens_raw": 1179445,
+  "n_tokens_clean": 482294,
+  "vocab": 562,
+  "n_classes": 10,
+  "avg_len_clean": 40.2,
+  "n_phrases": 94,
+  "class_counts": {
+   "Space & Astronomy": 1178,
+   "Medicine & Health": 1154,
+   "Sports": 1208,
+   "Finance & Markets": 1228,
+   "AI & Computing": 1218,
+   "Climate & Environment": 1226,
+   "Food & Cooking": 1192,
+   "Politics & Government": 1199,
+   "Education & Universities": 1198,
+   "Travel & Tourism": 1199
+  }
+ },
+ "graph": {
+  "n_nodes": 562,
+  "n_edges": 16539,
+  "n_topics": 10,
+  "modularity": 0.7943,
+  "density": 0.10492,
+  "timing": {
+   "graph": 0.31,
+   "community": 0.109,
+   "total": 0.419
+  },
+  "npmi_coherence": 0.5401377101848841,
+  "diversity": 1.0,
+  "nmi": 0.9407163044842052,
+  "ari": 0.9565710289666363,
+  "purity": 0.98025
+ },
+ "topics": [
+  {
+   "id": 0,
+   "name": "Space & Astronomy",
+   "size_words": 64,
+   "docs": 1171,
+   "npmi": 0.562,
+   "words": [
+    "distant",
+    "telescope",
+    "orbit",
+    "lunar",
+    "black_hole",
+    "galaxy",
+    "stellar",
+    "solar_system",
+    "dark_matter",
+    "orbital"
+   ]
+  },
+  {
+   "id": 1,
+   "name": "Medicine & Health",
+   "size_words": 59,
+   "docs": 1165,
+   "npmi": 0.552,
+   "words": [
+    "clinical",
+    "patient",
+    "chronic",
+    "clinical_trial",
+    "doctor",
+    "blood_pressure",
+    "acute",
+    "severe",
+    "heart_disease",
+    "hospital"
+   ]
+  },
+  {
+   "id": 2,
+   "name": "Sports",
+   "size_words": 58,
+   "docs": 1195,
+   "npmi": 0.566,
+   "words": [
+    "decisive",
+    "match",
+    "team",
+    "world_cup",
+    "unbeaten",
+    "grand_slam",
+    "wins",
+    "thrilling",
+    "dominant",
+    "professional"
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Education & Universities",
+   "size_words": 60,
+   "docs": 1200,
+   "npmi": 0.555,
+   "words": [
+    "student",
+    "academic",
+    "university",
+    "higher_education",
+    "professor",
+    "undergraduate",
+    "lecture",
+    "online_course",
+    "entrance_exam",
+    "collegiate"
+   ]
+  },
+  {
+   "id": 4,
+   "name": "AI & Computing",
+   "size_words": 56,
+   "docs": 1214,
+   "npmi": 0.522,
+   "words": [
+    "digital",
+    "algorithm",
+    "autonomous",
+    "neural",
+    "machine_learning",
+    "neural_network",
+    "distributed",
+    "predictive",
+    "scalable",
+    "efficient"
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Finance & Markets",
+   "size_words": 55,
+   "docs": 1229,
+   "npmi": 0.54,
+   "words": [
+    "fiscal",
+    "stock",
+    "financial",
+    "stock_market",
+    "monetary",
+    "bullish",
+    "volatile",
+    "lend",
+    "balance_sheet",
+    "interest_rate"
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Politics & Government",
+   "size_words": 55,
+   "docs": 1201,
+   "npmi": 0.525,
+   "words": [
+    "political",
+    "federal",
+    "election",
+    "prime_minister",
+    "opposition_leader",
+    "bipartisan",
+    "parliament",
+    "foreign_policy",
+    "vote_bank",
+    "democratic"
+   ]
+  },
+  {
+   "id": 7,
+   "name": "Food & Cooking",
+   "size_words": 54,
+   "docs": 1201,
+   "npmi": 0.544,
+   "words": [
+    "crispy",
+    "savoury",
+    "recipe",
+    "olive_oil",
+    "chef",
+    "tender",
+    "fresh",
+    "tasting_menu",
+    "street_food",
+    "farm_table"
+   ]
+  },
+  {
+   "id": 8,
+   "name": "Travel & Tourism",
+   "size_words": 52,
+   "docs": 1197,
+   "npmi": 0.515,
+   "words": [
+    "scenic",
+    "tourist",
+    "hotel",
+    "remote",
+    "world_heritage",
+    "luxurious",
+    "boarding_pass",
+    "package_tour",
+    "popular",
+    "travel_guide"
+   ]
+  },
+  {
+   "id": 9,
+   "name": "Climate & Environment",
+   "size_words": 49,
+   "docs": 1227,
+   "npmi": 0.519,
+   "words": [
+    "renewable",
+    "climate",
+    "sustainable",
+    "global_warming",
+    "tropical",
+    "arctic",
+    "endangered",
+    "sea_level",
+    "carbon_emission",
+    "rain_forest"
+   ]
+  }
+ ],
+ "bridge_words": [
+  {
+   "word": "monday",
+   "participation": 0.899,
+   "topics": [
+    "Medicine & Health",
+    "Politics & Government"
+   ]
+  },
+  {
+   "word": "recent_month",
+   "participation": 0.897,
+   "topics": [
+    "Travel & Tourism",
+    "Sports"
+   ]
+  },
+  {
+   "word": "thursday",
+   "participation": 0.895,
+   "topics": [
+    "Climate & Environment",
+    "Education & Universities"
+   ]
+  },
+  {
+   "word": "attention_recent",
+   "participation": 0.891,
+   "topics": [
+    "Climate & Environment",
+    "Education & Universities"
+   ]
+  },
+  {
+   "word": "analyst_expect",
+   "participation": 0.89,
+   "topics": [
+    "Education & Universities",
+    "Space & Astronomy"
+   ]
+  },
+  {
+   "word": "earlier",
+   "participation": 0.889,
+   "topics": [
+    "Politics & Government",
+    "Sports"
+   ]
+  },
+  {
+   "word": "weekend",
+   "participation": 0.889,
+   "topics": [
+    "Education & Universities",
+    "AI & Computing"
+   ]
+  },
+  {
+   "word": "worker",
+   "participation": 0.888,
+   "topics": [
+    "Space & Astronomy",
+    "Travel & Tourism"
+   ]
+  },
+  {
+   "word": "month",
+   "participation": 0.888,
+   "topics": [
+    "Climate & Environment",
+    "AI & Computing"
+   ]
+  },
+  {
+   "word": "observer",
+   "participation": 0.888,
+   "topics": [
+    "Travel & Tourism",
+    "Politics & Government"
+   ]
+  }
+ ],
+ "polysemous": [
+  {
+   "word": "power",
+   "participation": 0.731,
+   "topics": [
+    "Climate & Environment (0.32)",
+    "Sports (0.31)",
+    "Politics & Government (0.23)"
+   ]
+  },
+  {
+   "word": "season",
+   "participation": 0.663,
+   "topics": [
+    "Food & Cooking (0.45)",
+    "Sports (0.35)",
+    "Travel & Tourism (0.08)"
+   ]
+  },
+  {
+   "word": "training",
+   "participation": 0.513,
+   "topics": [
+    "AI & Computing (0.67)",
+    "Education & Universities (0.17)",
+    "Sports (0.13)"
+   ]
+  },
+  {
+   "word": "model",
+   "participation": 0.508,
+   "topics": [
+    "AI & Computing (0.68)",
+    "Climate & Environment (0.13)",
+    "Finance & Markets (0.08)"
+   ]
+  },
+  {
+   "word": "growth",
+   "participation": 0.506,
+   "topics": [
+    "Finance & Markets (0.55)",
+    "Medicine & Health (0.44)"
+   ]
+  },
+  {
+   "word": "record",
+   "participation": 0.499,
+   "topics": [
+    "Sports (0.57)",
+    "Finance & Markets (0.42)"
+   ]
+  },
+  {
+   "word": "policy",
+   "participation": 0.479,
+   "topics": [
+    "Politics & Government (0.69)",
+    "Climate & Environment (0.18)",
+    "Finance & Markets (0.13)"
+   ]
+  },
+  {
+   "word": "energy",
+   "participation": 0.453,
+   "topics": [
+    "Climate & Environment (0.71)",
+    "Sports (0.18)",
+    "Space & Astronomy (0.10)"
+   ]
+  },
+  {
+   "word": "study",
+   "participation": 0.443,
+   "topics": [
+    "Education & Universities (0.72)",
+    "Climate & Environment (0.19)",
+    "Medicine & Health (0.09)"
+   ]
+  },
+  {
+   "word": "network",
+   "participation": 0.413,
+   "topics": [
+    "AI & Computing (0.76)",
+    "Education & Universities (0.10)",
+    "Politics & Government (0.07)"
+   ]
+  },
+  {
+   "word": "cell",
+   "participation": 0.372,
+   "topics": [
+    "Medicine & Health (0.75)",
+    "AI & Computing (0.25)"
+   ]
+  },
+  {
+   "word": "launch",
+   "participation": 0.334,
+   "topics": [
+    "Space & Astronomy (0.79)",
+    "AI & Computing (0.19)"
+   ]
+  },
+  {
+   "word": "market",
+   "participation": 0.205,
+   "topics": [
+    "Finance & Markets (0.89)"
+   ]
+  }
+ ],
+ "graph_stats": {
+  "avg_degree": 58.9,
+  "max_degree": 156,
+  "clustering": 0.301,
+  "components": 1
+ },
+ "comparison": {
+  "Graph (Louvain)": {
+   "npmi_coherence": [
+    0.5401,
+    0.0
+   ],
+   "diversity": [
+    1.0,
+    0.0
+   ],
+   "nmi": [
+    0.9407,
+    0.0
+   ],
+   "ari": [
+    0.9566,
+    0.0
+   ],
+   "purity": [
+    0.9802,
+    0.0
+   ],
+   "time": [
+    0.4239,
+    0.0193
+   ]
+  },
+  "LDA": {
+   "npmi_coherence": [
+    0.4757,
+    0.0041
+   ],
+   "diversity": [
+    1.0,
+    0.0
+   ],
+   "nmi": [
+    0.9102,
+    0.0002
+   ],
+   "ari": [
+    0.8589,
+    0.0024
+   ],
+   "purity": [
+    0.8835,
+    0.0015
+   ],
+   "time": [
+    14.2071,
+    0.199
+   ]
+  },
+  "NMF": {
+   "npmi_coherence": [
+    0.5689,
+    0.0
+   ],
+   "diversity": [
+    1.0,
+    0.0
+   ],
+   "nmi": [
+    0.924,
+    0.0
+   ],
+   "ari": [
+    0.94,
+    0.0
+   ],
+   "purity": [
+    0.9725,
+    0.0
+   ],
+   "time": [
+    0.1196,
+    0.0042
+   ]
+  }
+ },
+ "ablation_method": {
+  "louvain": {
+   "topics": 10,
+   "modularity": 0.7943,
+   "npmi": 0.5401,
+   "nmi": 0.9407,
+   "time": 0.094
+  },
+  "greedy_modularity": {
+   "topics": 10,
+   "modularity": 0.7782,
+   "npmi": 0.5352,
+   "nmi": 0.9392,
+   "time": 0.69
+  },
+  "label_propagation": {
+   "topics": 10,
+   "modularity": 0.7942,
+   "npmi": 0.5401,
+   "nmi": 0.9407,
+   "time": 0.062
+  }
+ },
+ "resolution_sweep": [
+  {
+   "res": 0.2,
+   "k": 8,
+   "mod": 0.7628663175437996,
+   "npmi": 0.5024608698563594,
+   "nmi": 0.8751648203017617
+  },
+  {
+   "res": 0.4,
+   "k": 10,
+   "mod": 0.7942504376330988,
+   "npmi": 0.5406245712131417,
+   "nmi": 0.9408889814190614
+  },
+  {
+   "res": 0.6,
+   "k": 10,
+   "mod": 0.7942504376330988,
+   "npmi": 0.5406245712131417,
+   "nmi": 0.9408889814190614
+  },
+  {
+   "res": 0.8,
+   "k": 10,
+   "mod": 0.7942504376330988,
+   "npmi": 0.5406245712131417,
+   "nmi": 0.9408889814190614
+  },
+  {
+   "res": 1.0,
+   "k": 10,
+   "mod": 0.7942547049965929,
+   "npmi": 0.5401377101848841,
+   "nmi": 0.9407163044842052
+  },
+  {
+   "res": 1.3,
+   "k": 10,
+   "mod": 0.794192614046009,
+   "npmi": 0.5395386972177005,
+   "nmi": 0.9409181065771074
+  },
+  {
+   "res": 1.6,
+   "k": 10,
+   "mod": 0.7934138524342836,
+   "npmi": 0.5390876181627094,
+   "nmi": 0.9409181289045155
+  },
+  {
+   "res": 2.0,
+   "k": 10,
+   "mod": 0.7907303484222177,
+   "npmi": 0.5320762174143226,
+   "nmi": 0.9411483289152504
+  },
+  {
+   "res": 2.5,
+   "k": 10,
+   "mod": 0.7892082669998475,
+   "npmi": 0.5306673885174134,
+   "nmi": 0.9410478346160862
+  }
+ ],
+ "window_sweep": [
+  {
+   "window": 3,
+   "k": 10,
+   "mod": 0.7897415138417593,
+   "npmi": 0.5322549537874226,
+   "nmi": 0.9402831770005057,
+   "edges": 14335
+  },
+  {
+   "window": 5,
+   "k": 10,
+   "mod": 0.794299432625813,
+   "npmi": 0.5265940314579812,
+   "nmi": 0.9411409238008223,
+   "edges": 15553
+  },
+  {
+   "window": 8,
+   "k": 10,
+   "mod": 0.7942547049965929,
+   "npmi": 0.5401377101848841,
+   "nmi": 0.9407163044842052,
+   "edges": 16539
+  },
+  {
+   "window": 12,
+   "k": 10,
+   "mod": 0.7965536746525348,
+   "npmi": 0.5468070859455504,
+   "nmi": 0.9402761840374328,
+   "edges": 17082
+  },
+  {
+   "window": 16,
+   "k": 10,
+   "mod": 0.8019525046261659,
+   "npmi": 0.5561675304354912,
+   "nmi": 0.9408946531566275,
+   "edges": 17114
+  },
+  {
+   "window": 24,
+   "k": 10,
+   "mod": 0.8084115636945279,
+   "npmi": 0.5634596015918387,
+   "nmi": 0.9400272980299169,
+   "edges": 17047
+  }
+ ],
+ "noise_robustness": [
+  {
+   "noise": 0.05,
+   "Graph": 0.9494508634291317,
+   "k": 10,
+   "LDA": 0.9495236817794983,
+   "NMF": 0.9246043487266038
+  },
+  {
+   "noise": 0.18,
+   "Graph": 0.9428791060506888,
+   "k": 10,
+   "LDA": 0.9118474869012732,
+   "NMF": 0.9251672368610582
+  },
+  {
+   "noise": 0.35,
+   "Graph": 0.9455781343363815,
+   "k": 10,
+   "LDA": 0.9113919062035138,
+   "NMF": 0.925423569541915
+  },
+  {
+   "noise": 0.5,
+   "Graph": 0.9502722189847598,
+   "k": 10,
+   "LDA": 0.9087135910105707,
+   "NMF": 0.9316081563429918
+  }
+ ],
+ "scalability": [
+  {
+   "n": 1000,
+   "tokens": 39906,
+   "Graph": 0.12925434112548828,
+   "LDA": 1.6082556247711182,
+   "NMF": 0.02149796485900879
+  },
+  {
+   "n": 2500,
+   "tokens": 100374,
+   "Graph": 0.2996373176574707,
+   "LDA": 3.4242167472839355,
+   "NMF": 0.025838136672973633
+  },
+  {
+   "n": 5000,
+   "tokens": 200708,
+   "Graph": 0.2294762134552002,
+   "LDA": 6.564623117446899,
+   "NMF": 0.047644853591918945
+  },
+  {
+   "n": 10000,
+   "tokens": 400468,
+   "Graph": 0.32430410385131836,
+   "LDA": 12.068139791488647,
+   "NMF": 0.11114859580993652
+  },
+  {
+   "n": 20000,
+   "tokens": 801810,
+   "Graph": 0.6690506935119629,
+   "LDA": 24.234227418899536,
+   "NMF": 0.1913769245147705
+  },
+  {
+   "n": 40000,
+   "tokens": 1605108,
+   "Graph": 1.0097167491912842,
+   "LDA": 49.35338616371155,
+   "NMF": 0.43148112297058105
+  }
+ ]
+}
