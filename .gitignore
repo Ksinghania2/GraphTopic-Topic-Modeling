@@ -13,6 +13,7 @@ env/
 # Probe / scratch
 _probe.py
 _probe_result.txt
+/results/cli_output/
 
 # IDE / OS
 .vscode/
