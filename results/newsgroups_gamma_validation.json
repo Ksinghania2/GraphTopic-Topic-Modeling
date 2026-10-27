@@ -1,0 +1,310 @@
+{
+  "dataset": "20 Newsgroups, headers/footers/quotes removed, documents >20 words",
+  "split": {
+    "train_documents": 9993,
+    "validation_documents": 3331,
+    "test_documents": 3331,
+    "seed": 42,
+    "stratified": true
+  },
+  "preprocessing": {
+    "min_df": 5,
+    "max_df_ratio": 0.5,
+    "max_vocab": 3000,
+    "phrase_min_count": 15,
+    "npmi_phrase_threshold": 0.5
+  },
+  "selection_metric": "validation NMI",
+  "resolutions": [
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    2.0
+  ],
+  "selected_resolution": 2.0,
+  "validation_sweep": [
+    {
+      "resolution": 0.5,
+      "n_topics": 2,
+      "modularity": 0.10254930814096613,
+      "fit_seconds": 19.999405699956696,
+      "npmi_coherence": 0.01513425251468925,
+      "nmi": 0.010024981960861054,
+      "ari": 5.7692557034470724e-05,
+      "purity": 0.06124287000900631
+    },
+    {
+      "resolution": 0.75,
+      "n_topics": 4,
+      "modularity": 0.31160000670664856,
+      "fit_seconds": 20.938743100035936,
+      "npmi_coherence": 0.05858119097901977,
+      "nmi": 0.19765407207830515,
+      "ari": 0.0444054952824014,
+      "purity": 0.12218552987090964
+    },
+    {
+      "resolution": 1.0,
+      "n_topics": 8,
+      "modularity": 0.33095134583158664,
+      "fit_seconds": 21.101884300005622,
+      "npmi_coherence": 0.4116399598313685,
+      "nmi": 0.29109461464535474,
+      "ari": 0.08319981915018042,
+      "purity": 0.21254878414890424
+    },
+    {
+      "resolution": 1.25,
+      "n_topics": 12,
+      "modularity": 0.3180177594513991,
+      "fit_seconds": 19.855429799994454,
+      "npmi_coherence": 0.25442394027370513,
+      "nmi": 0.35458937437555427,
+      "ari": 0.14542340198529075,
+      "purity": 0.2858000600420294
+    },
+    {
+      "resolution": 1.5,
+      "n_topics": 18,
+      "modularity": 0.31170885299631673,
+      "fit_seconds": 23.135165399988182,
+      "npmi_coherence": 0.33197420515627063,
+      "nmi": 0.3661812105173059,
+      "ari": 0.15943852750028917,
+      "purity": 0.3125187631341939
+    },
+    {
+      "resolution": 2.0,
+      "n_topics": 30,
+      "modularity": 0.28766577683872013,
+      "fit_seconds": 21.320235699997284,
+      "npmi_coherence": 0.2198370809205234,
+      "nmi": 0.37739850782666556,
+      "ari": 0.1876493152728845,
+      "purity": 0.3596517562293606
+    }
+  ],
+  "test_results": {
+    "default_gamma_1": {
+      "resolution": 1.0,
+      "n_topics": 9,
+      "modularity": 0.3398772144358353,
+      "npmi_coherence": 0.2087970241377577,
+      "nmi": 0.27414363565467864,
+      "ari": 0.07899780988904768,
+      "purity": 0.2002401681176824,
+      "topic_class_mapping": [
+        {
+          "topic": 0,
+          "dominant_class": "comp.sys.ibm.pc.hardware",
+          "share": 0.10332749562171628,
+          "documents": 1713
+        },
+        {
+          "topic": 1,
+          "dominant_class": "soc.religion.christian",
+          "share": 0.28703703703703703,
+          "documents": 540
+        },
+        {
+          "topic": 2,
+          "dominant_class": "rec.motorcycles",
+          "share": 0.16066481994459833,
+          "documents": 722
+        },
+        {
+          "topic": 3,
+          "dominant_class": "talk.politics.mideast",
+          "share": 0.6363636363636364,
+          "documents": 143
+        },
+        {
+          "topic": 4,
+          "dominant_class": "rec.sport.hockey",
+          "share": 0.5771144278606966,
+          "documents": 201
+        },
+        {
+          "topic": 5,
+          "dominant_class": "sci.space",
+          "share": 1.0,
+          "documents": 8
+        },
+        {
+          "topic": 6,
+          "dominant_class": "sci.med",
+          "share": 1.0,
+          "documents": 4
+        }
+      ]
+    },
+    "validation_selected": {
+      "resolution": 2.0,
+      "n_topics": 25,
+      "modularity": 0.3016970029665887,
+      "npmi_coherence": 0.23921622837974052,
+      "nmi": 0.3875590068406926,
+      "ari": 0.20052948873877088,
+      "purity": 0.354848393875713,
+      "topic_class_mapping": [
+        {
+          "topic": 0,
+          "dominant_class": "comp.windows.x",
+          "share": 0.22403560830860533,
+          "documents": 674
+        },
+        {
+          "topic": 1,
+          "dominant_class": "rec.sport.hockey",
+          "share": 0.33488372093023255,
+          "documents": 430
+        },
+        {
+          "topic": 2,
+          "dominant_class": "talk.politics.mideast",
+          "share": 0.5882352941176471,
+          "documents": 221
+        },
+        {
+          "topic": 3,
+          "dominant_class": "soc.religion.christian",
+          "share": 0.5815899581589958,
+          "documents": 239
+        },
+        {
+          "topic": 4,
+          "dominant_class": "talk.politics.guns",
+          "share": 0.15294117647058825,
+          "documents": 255
+        },
+        {
+          "topic": 5,
+          "dominant_class": "comp.sys.ibm.pc.hardware",
+          "share": 0.3014705882352941,
+          "documents": 408
+        },
+        {
+          "topic": 6,
+          "dominant_class": "alt.atheism",
+          "share": 0.25555555555555554,
+          "documents": 270
+        },
+        {
+          "topic": 7,
+          "dominant_class": "sci.space",
+          "share": 0.9411764705882353,
+          "documents": 68
+        },
+        {
+          "topic": 8,
+          "dominant_class": "sci.med",
+          "share": 0.8194444444444444,
+          "documents": 72
+        },
+        {
+          "topic": 9,
+          "dominant_class": "talk.politics.guns",
+          "share": 0.5346534653465347,
+          "documents": 101
+        },
+        {
+          "topic": 10,
+          "dominant_class": "rec.sport.hockey",
+          "share": 0.3333333333333333,
+          "documents": 27
+        },
+        {
+          "topic": 11,
+          "dominant_class": "sci.electronics",
+          "share": 0.11326860841423948,
+          "documents": 309
+        },
+        {
+          "topic": 12,
+          "dominant_class": "rec.autos",
+          "share": 0.5100671140939598,
+          "documents": 149
+        },
+        {
+          "topic": 13,
+          "dominant_class": "sci.crypt",
+          "share": 0.9830508474576272,
+          "documents": 59
+        },
+        {
+          "topic": 14,
+          "dominant_class": "sci.crypt",
+          "share": 0.25,
+          "documents": 4
+        },
+        {
+          "topic": 15,
+          "dominant_class": "comp.windows.x",
+          "share": 0.25,
+          "documents": 8
+        },
+        {
+          "topic": 16,
+          "dominant_class": "sci.crypt",
+          "share": 0.5,
+          "documents": 2
+        },
+        {
+          "topic": 17,
+          "dominant_class": "misc.forsale",
+          "share": 0.5,
+          "documents": 4
+        },
+        {
+          "topic": 18,
+          "dominant_class": "misc.forsale",
+          "share": 0.9230769230769231,
+          "documents": 13
+        },
+        {
+          "topic": 19,
+          "dominant_class": "sci.electronics",
+          "share": 0.3333333333333333,
+          "documents": 6
+        },
+        {
+          "topic": 21,
+          "dominant_class": "sci.electronics",
+          "share": 1.0,
+          "documents": 2
+        },
+        {
+          "topic": 22,
+          "dominant_class": "talk.politics.misc",
+          "share": 1.0,
+          "documents": 1
+        },
+        {
+          "topic": 23,
+          "dominant_class": "comp.os.ms-windows.misc",
+          "share": 1.0,
+          "documents": 6
+        },
+        {
+          "topic": 24,
+          "dominant_class": "sci.med",
+          "share": 1.0,
+          "documents": 3
+        }
+      ]
+    }
+  },
+  "software_hardware": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "processor": "Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz",
+    "logical_cpu_count": 4,
+    "ram_bytes": 16984268800,
+    "python": "3.14.2",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "networkx": "3.7",
+    "scikit_learn": "1.9.1"
+  }
+}

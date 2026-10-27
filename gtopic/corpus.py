@@ -86,7 +86,9 @@ def _zipf(rng, items, k=1.0):
 
 
 def generate_corpus(n_docs: int = 12000, seed: int = 7, noise: float = 0.18, mix: float = 0.4):
-    """Return (texts, labels). Each document has a primary topic (label), optionally
+    """Return (texts, labels); ``seed`` controls the local random generator.
+
+    Each document has a primary topic (label), optionally
     a secondary topic (prob `mix`), generic filler sentences and `noise` probability
     that a content word is drawn from a random other topic. Polysemous words such
     as model/energy/market/season/power appear in several topics."""
@@ -144,8 +146,11 @@ def load_corpus(path: str, text_col: str = "text", label_col: str = "label"):
 
 
 def load_20newsgroups(categories=None):
-    """Optional real-world corpus (needs internet on first call)."""
+    """Load body-only 20 Newsgroups data (needs internet on first call)."""
     from sklearn.datasets import fetch_20newsgroups
-    d = fetch_20newsgroups(subset="all", categories=categories, remove=("headers", "footers", "quotes"))
+    if categories is None:
+        d = fetch_20newsgroups(subset="all", remove=("headers", "footers", "quotes"))
+    else:
+        d = fetch_20newsgroups(subset="all", categories=categories, remove=("headers", "footers", "quotes"))
     keep = [i for i, t in enumerate(d.data) if len(t.split()) > 20]
     return [d.data[i] for i in keep], [int(d.target[i]) for i in keep]

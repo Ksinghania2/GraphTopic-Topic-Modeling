@@ -15,17 +15,18 @@ def _counts(docs, V):
 
 
 def run_lda(docs, V, k, topn=10, seed=42, max_iter=15):
-    X = _counts(docs, V); t = time.time()
+    t = time.perf_counter(); X = _counts(docs, V)
     m = LatentDirichletAllocation(n_components=k, learning_method="online", max_iter=max_iter,
                                   random_state=seed, batch_size=512).fit(X)
     theta = m.transform(X)
     return {"topics": [list(np.argsort(-r)[:topn]) for r in m.components_], "pred": theta.argmax(1),
-            "time": time.time() - t}
+            "time": time.perf_counter() - t}
 
 
 def run_nmf(docs, V, k, topn=10, seed=42):
-    X = TfidfTransformer().fit_transform(_counts(docs, V)); t = time.time()
+    t = time.perf_counter()
+    X = TfidfTransformer().fit_transform(_counts(docs, V))
     m = NMF(n_components=k, init="nndsvd", random_state=seed, max_iter=300).fit(X)
     W = m.transform(X)
     return {"topics": [list(np.argsort(-r)[:topn]) for r in m.components_], "pred": W.argmax(1),
-            "time": time.time() - t}
+            "time": time.perf_counter() - t}

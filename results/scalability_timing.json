@@ -1,0 +1,26 @@
+{
+  "warmup_runs_per_method_and_size": 1,
+  "measured_runs": 5,
+  "results": [
+    {
+      "documents": 2500,
+      "tokens": 100374,
+      "Graph_mean_seconds": 0.4327828799956478,
+      "Graph_std_seconds": 0.08483783845018511,
+      "LDA_mean_seconds": 11.909595220012125,
+      "LDA_std_seconds": 0.29387677947464586,
+      "NMF_mean_seconds": 0.10577407999662683,
+      "NMF_std_seconds": 0.012039434817249624
+    },
+    {
+      "documents": 5000,
+      "tokens": 200708,
+      "Graph_mean_seconds": 0.7565158599987626,
+      "Graph_std_seconds": 0.1276673199609628,
+      "LDA_mean_seconds": 36.20624120000284,
+      "LDA_std_seconds": 5.33885031112829,
+      "NMF_mean_seconds": 0.2711252799956128,
+      "NMF_std_seconds": 0.09462802628616462
+    }
+  ]
+}
