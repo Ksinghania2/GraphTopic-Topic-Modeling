@@ -1,0 +1,2421 @@
+{
+  "metadata": {
+    "dataset": "20 Newsgroups, all categories; documents with <=20 whitespace-separated words excluded",
+    "n_documents": 16655,
+    "class_counts": {
+      "alt.atheism": 703,
+      "comp.graphics": 862,
+      "comp.os.ms-windows.misc": 859,
+      "comp.sys.ibm.pc.hardware": 901,
+      "comp.sys.mac.hardware": 840,
+      "comp.windows.x": 902,
+      "misc.forsale": 859,
+      "rec.autos": 838,
+      "rec.motorcycles": 809,
+      "rec.sport.baseball": 828,
+      "rec.sport.hockey": 874,
+      "sci.crypt": 888,
+      "sci.electronics": 881,
+      "sci.med": 901,
+      "sci.space": 883,
+      "soc.religion.christian": 932,
+      "talk.politics.guns": 816,
+      "talk.politics.mideast": 843,
+      "talk.politics.misc": 698,
+      "talk.religion.misc": 538
+    },
+    "vocabulary_size": 3000,
+    "preprocessing": {
+      "min_document_frequency": 5,
+      "max_document_frequency_ratio": 0.5,
+      "max_vocabulary": 3000,
+      "phrase_min_count": 15,
+      "npmi_phrase_threshold": 0.5,
+      "window": 8,
+      "resolution": 1.0,
+      "tuning": "No 20 Newsgroups tuning performed; fixed defaults evaluated on the full corpus."
+    },
+    "graph_seeds": [
+      1,
+      2,
+      3,
+      42,
+      99
+    ],
+    "baseline_seeds": [
+      1,
+      2,
+      3
+    ],
+    "software_hardware": {
+      "platform": "Windows-10-10.0.19045-SP0",
+      "processor": "Intel(R) Core(TM) i5-6300U CPU @ 2.40GHz",
+      "logical_cpu_count": 4,
+      "ram_bytes": 16984268800,
+      "python": "3.14.2",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "networkx": "3.7",
+      "scikit_learn": "1.9.1"
+    },
+    "graph_reference_k_seed_42": 8,
+    "phrase_count": 1444
+  },
+  "graph_seed_stability": [
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "k": 8,
+      "seconds": 18.11100700002862,
+      "npmi_coherence": 0.4116322897754347,
+      "diversity": 1.0,
+      "nmi": 0.3152738194845045,
+      "ari": 0.11855418610735936,
+      "purity": 0.21591113779645751
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "k": 9,
+      "seconds": 13.617006399959791,
+      "npmi_coherence": 0.4955379923950076,
+      "diversity": 1.0,
+      "nmi": 0.3184713164272846,
+      "ari": 0.11491944099517873,
+      "purity": 0.21639147403182227
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "k": 9,
+      "seconds": 9.712508799973875,
+      "npmi_coherence": 0.4639306828062697,
+      "diversity": 1.0,
+      "nmi": 0.310426268024466,
+      "ari": 0.12224761130823861,
+      "purity": 0.23356349444611227
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "k": 8,
+      "seconds": 6.069890800048597,
+      "npmi_coherence": 0.42993317583186863,
+      "diversity": 1.0,
+      "nmi": 0.3309103115913454,
+      "ari": 0.12472471747043362,
+      "purity": 0.22101471029720804
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "k": 8,
+      "seconds": 15.810044299985748,
+      "npmi_coherence": 0.47026794877287836,
+      "diversity": 1.0,
+      "nmi": 0.2928044272006996,
+      "ari": 0.09448353281821391,
+      "purity": 0.19855899129390572
+    }
+  ],
+  "baseline_runs": [
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "seconds": 146.81052629998885,
+      "npmi_coherence": 0.22082141931350288,
+      "diversity": 0.875,
+      "nmi": 0.3189454606094695,
+      "ari": 0.13548868373349715,
+      "purity": 0.2619633743620534,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "seconds": 168.6515931999893,
+      "npmi_coherence": 0.20943285614860072,
+      "diversity": 0.8625,
+      "nmi": 0.34871373962266683,
+      "ari": 0.15061399392700153,
+      "purity": 0.2580606424497148,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "seconds": 147.494191100006,
+      "npmi_coherence": 0.20641215299137755,
+      "diversity": 0.9125,
+      "nmi": 0.2970606159116704,
+      "ari": 0.10888667036871486,
+      "purity": 0.22221555088561992,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "seconds": 2.309907699993346,
+      "npmi_coherence": 0.28369888049324443,
+      "diversity": 0.9625,
+      "nmi": 0.3059770887980936,
+      "ari": 0.12789972260475332,
+      "purity": 0.2507355148604023,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "seconds": 2.31197710003471,
+      "npmi_coherence": 0.28369888049324443,
+      "diversity": 0.9625,
+      "nmi": 0.30633004664551106,
+      "ari": 0.1281022793897616,
+      "purity": 0.25097568297808465,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "seconds": 6.62250870000571,
+      "npmi_coherence": 0.2874784168469391,
+      "diversity": 0.95,
+      "nmi": 0.3372807434943353,
+      "ari": 0.1432194355190263,
+      "purity": 0.27733413389372563,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "seconds": 171.965633899963,
+      "npmi_coherence": 0.2518385827088055,
+      "diversity": 0.895,
+      "nmi": 0.33318610853391867,
+      "ari": 0.13974878497639429,
+      "purity": 0.342119483638547,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "seconds": 238.68496820004657,
+      "npmi_coherence": 0.2576064824095979,
+      "diversity": 0.895,
+      "nmi": 0.31757994372374143,
+      "ari": 0.13537750042641986,
+      "purity": 0.3110177123986791,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "seconds": 192.56815669999924,
+      "npmi_coherence": 0.25688048375899003,
+      "diversity": 0.895,
+      "nmi": 0.3293617632589579,
+      "ari": 0.16964569163887377,
+      "purity": 0.33911738216751725,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "seconds": 17.039908799983095,
+      "npmi_coherence": 0.31186277854023153,
+      "diversity": 0.915,
+      "nmi": 0.3405365196502559,
+      "ari": 0.1723091521438056,
+      "purity": 0.36565595917142,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "seconds": 25.092589899955783,
+      "npmi_coherence": 0.3189469228910166,
+      "diversity": 0.905,
+      "nmi": 0.34188626816147977,
+      "ari": 0.15348487817674392,
+      "purity": 0.3558090663464425,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "seconds": 25.174982100026682,
+      "npmi_coherence": 0.30791133168068135,
+      "diversity": 0.9,
+      "nmi": 0.3227657655125936,
+      "ari": 0.1457569681465002,
+      "purity": 0.34896427499249477,
+      "k_setting": "true_20_classes"
+    }
+  ],
+  "summary": [
+    {
+      "method": "GraphTopic",
+      "k": "seed-dependent",
+      "runs": 5,
+      "found_k_mean": 8.4,
+      "found_k_std": 0.48989794855663565,
+      "npmi_coherence_mean": 0.4542604179162918,
+      "npmi_coherence_std": 0.029874956864371555,
+      "diversity_mean": 1.0,
+      "diversity_std": 0.0,
+      "nmi_mean": 0.31357722854566006,
+      "nmi_std": 0.01239922669200601,
+      "ari_mean": 0.11498589773988485,
+      "ari_std": 0.010776466577191923,
+      "purity_mean": 0.21708796157310112,
+      "purity_std": 0.011243267209274028,
+      "seconds_mean": 12.664091459999327,
+      "seconds_std": 4.305096458782049,
+      "k_setting": "seed-dependent"
+    },
+    {
+      "method": "LDA",
+      "k": 8,
+      "runs": 3,
+      "npmi_coherence_mean": 0.21222214281782703,
+      "npmi_coherence_std": 0.006204397853019346,
+      "diversity_mean": 0.8833333333333333,
+      "diversity_std": 0.02124591463996991,
+      "nmi_mean": 0.32157327204793557,
+      "nmi_std": 0.02116900788090892,
+      "ari_mean": 0.13166311600973785,
+      "ari_std": 0.017248547941615032,
+      "purity_mean": 0.24741318923246272,
+      "purity_std": 0.017888517039125192,
+      "seconds_mean": 154.3187701999947,
+      "seconds_std": 10.13867876834636,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "k": 8,
+      "runs": 3,
+      "npmi_coherence_mean": 0.28495872594447597,
+      "npmi_coherence_std": 0.001781690523625713,
+      "diversity_mean": 0.9583333333333334,
+      "diversity_std": 0.005892556509887927,
+      "nmi_mean": 0.3165292929793133,
+      "nmi_std": 0.01467419886895744,
+      "ari_mean": 0.13307381250451375,
+      "ari_std": 0.007174515411150006,
+      "purity_mean": 0.2596817772440709,
+      "purity_std": 0.01248248617453393,
+      "seconds_mean": 3.748131166677922,
+      "seconds_std": 2.032492021087871,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "k": 20,
+      "runs": 3,
+      "npmi_coherence_mean": 0.2554418496257978,
+      "npmi_coherence_std": 0.0025650754201373954,
+      "diversity_mean": 0.895,
+      "diversity_std": 0.0,
+      "nmi_mean": 0.32670927183887266,
+      "nmi_std": 0.006641529847398257,
+      "ari_mean": 0.14825732568056263,
+      "ari_std": 0.015228781543056189,
+      "purity_mean": 0.3307515260682478,
+      "purity_std": 0.014007633746628577,
+      "seconds_mean": 201.07291960000293,
+      "seconds_std": 27.89403324907242,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "k": 20,
+      "runs": 3,
+      "npmi_coherence_mean": 0.31290701103730983,
+      "npmi_coherence_std": 0.004565368511695633,
+      "diversity_mean": 0.9066666666666667,
+      "diversity_std": 0.006236095644623242,
+      "nmi_mean": 0.3350628511081098,
+      "nmi_std": 0.008712794839333536,
+      "ari_mean": 0.15718366615568324,
+      "ari_std": 0.011150945943178989,
+      "purity_mean": 0.3568097668367858,
+      "purity_std": 0.006850991718273387,
+      "seconds_mean": 22.435826933321852,
+      "seconds_std": 3.8156385655989182,
+      "k_setting": "true_20_classes"
+    }
+  ],
+  "topic_class_mapping": [
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 0,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.12130874809371968,
+      "documents": 7213,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 1,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.25708661417322837,
+      "documents": 2540,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 2,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.4438717067583047,
+      "documents": 1746,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 3,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.23594572140681253,
+      "documents": 3611,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 4,
+      "dominant_class": "rec.autos",
+      "share": 0.25535289452815224,
+      "documents": 1261,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 5,
+      "dominant_class": "sci.crypt",
+      "share": 0.7706422018348624,
+      "documents": 109,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 6,
+      "dominant_class": "sci.med",
+      "share": 0.13043478260869565,
+      "documents": 161,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 1,
+      "topic": 7,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 1.0,
+      "documents": 14,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 0,
+      "dominant_class": "comp.windows.x",
+      "share": 0.14456010745466757,
+      "documents": 5956,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 1,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.1527001862197393,
+      "documents": 5907,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 2,
+      "dominant_class": "rec.autos",
+      "share": 0.24009111617312073,
+      "documents": 2195,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 3,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.5088888888888888,
+      "documents": 900,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 4,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5027739251040222,
+      "documents": 1442,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 5,
+      "dominant_class": "sci.med",
+      "share": 0.7415730337078652,
+      "documents": 89,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 6,
+      "dominant_class": "sci.crypt",
+      "share": 0.3082191780821918,
+      "documents": 146,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 7,
+      "dominant_class": "misc.forsale",
+      "share": 1.0,
+      "documents": 7,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 2,
+      "topic": 8,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 1.0,
+      "documents": 13,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 0,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.2797858099062918,
+      "documents": 2241,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 1,
+      "dominant_class": "comp.windows.x",
+      "share": 0.18684895833333334,
+      "documents": 4608,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 2,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.17560677136447073,
+      "documents": 4903,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 3,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5127087872185911,
+      "documents": 1377,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 4,
+      "dominant_class": "comp.sys.mac.hardware",
+      "share": 0.18266978922716628,
+      "documents": 2989,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 5,
+      "dominant_class": "sci.space",
+      "share": 0.47198275862068967,
+      "documents": 464,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 6,
+      "dominant_class": "sci.crypt",
+      "share": 0.9423076923076923,
+      "documents": 52,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 7,
+      "dominant_class": "misc.forsale",
+      "share": 1.0,
+      "documents": 7,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 3,
+      "topic": 8,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 1.0,
+      "documents": 14,
+      "k": 9
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 0,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.1189445196211096,
+      "documents": 7390,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 1,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.2494390426327599,
+      "documents": 2674,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 2,
+      "dominant_class": "sci.med",
+      "share": 0.2519553072625698,
+      "documents": 1790,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 3,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.28101945003353457,
+      "documents": 2982,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 4,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.49012109623964306,
+      "documents": 1569,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 5,
+      "dominant_class": "sci.crypt",
+      "share": 0.2575107296137339,
+      "documents": 233,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 6,
+      "dominant_class": "misc.forsale",
+      "share": 1.0,
+      "documents": 3,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "topic": 7,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 1.0,
+      "documents": 14,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 0,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.1169606153030102,
+      "documents": 7541,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 1,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.3358644859813084,
+      "documents": 1712,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 2,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.17618567103935417,
+      "documents": 4955,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 3,
+      "dominant_class": "sci.space",
+      "share": 0.24803149606299213,
+      "documents": 1270,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 4,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5560344827586207,
+      "documents": 1160,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 5,
+      "dominant_class": "sci.crypt",
+      "share": 1.0,
+      "documents": 2,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 6,
+      "dominant_class": "misc.forsale",
+      "share": 1.0,
+      "documents": 2,
+      "k": 8
+    },
+    {
+      "method": "GraphTopic",
+      "seed": 99,
+      "topic": 7,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 1.0,
+      "documents": 13,
+      "k": 8
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 0,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.2378138847858198,
+      "documents": 2031,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 1,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.14384396586753354,
+      "documents": 4922,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 2,
+      "dominant_class": "sci.crypt",
+      "share": 0.306803594351733,
+      "documents": 1558,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 3,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.3357261181667587,
+      "documents": 1811,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 4,
+      "dominant_class": "comp.windows.x",
+      "share": 0.3337979094076655,
+      "documents": 1435,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 5,
+      "dominant_class": "misc.forsale",
+      "share": 0.22826696578799777,
+      "documents": 1783,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 6,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.6818980667838312,
+      "documents": 569,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 8,
+      "topic": 7,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.31893165750196384,
+      "documents": 2546,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 0,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5149201943095073,
+      "documents": 1441,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 1,
+      "dominant_class": "comp.windows.x",
+      "share": 0.39732142857142855,
+      "documents": 1344,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 2,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.5711111111111111,
+      "documents": 450,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 3,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.20372285418821096,
+      "documents": 3868,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 4,
+      "dominant_class": "comp.graphics",
+      "share": 0.187683284457478,
+      "documents": 1364,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 5,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.6025943396226415,
+      "documents": 848,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 6,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.14276315789473684,
+      "documents": 4560,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 8,
+      "topic": 7,
+      "dominant_class": "sci.space",
+      "share": 0.20107913669064748,
+      "documents": 2780,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 0,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.23791621911922664,
+      "documents": 1862,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 1,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.18658019456223496,
+      "documents": 4009,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 2,
+      "dominant_class": "misc.forsale",
+      "share": 0.18418688230008984,
+      "documents": 2226,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 3,
+      "dominant_class": "sci.crypt",
+      "share": 0.8214285714285714,
+      "documents": 392,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 4,
+      "dominant_class": "sci.med",
+      "share": 0.11770227144734371,
+      "documents": 5327,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 5,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.40224719101123596,
+      "documents": 890,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 6,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.6043405676126878,
+      "documents": 599,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 8,
+      "topic": 7,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.31925925925925924,
+      "documents": 1350,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 0,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.14481597305749339,
+      "documents": 4157,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 1,
+      "dominant_class": "comp.sys.mac.hardware",
+      "share": 0.23670212765957446,
+      "documents": 1504,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 2,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5338918507235338,
+      "documents": 1313,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 3,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.37682403433476397,
+      "documents": 1165,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 4,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.5110320284697509,
+      "documents": 1405,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 5,
+      "dominant_class": "comp.graphics",
+      "share": 0.1271448663853727,
+      "documents": 3555,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 6,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.23830658927961762,
+      "documents": 2929,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 8,
+      "topic": 7,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.3349282296650718,
+      "documents": 627,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 0,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.14461315979754158,
+      "documents": 4149,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 1,
+      "dominant_class": "comp.sys.mac.hardware",
+      "share": 0.2368596141051231,
+      "documents": 1503,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 2,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5338918507235338,
+      "documents": 1313,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 3,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.3767123287671233,
+      "documents": 1168,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 4,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.5110320284697509,
+      "documents": 1405,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 5,
+      "dominant_class": "comp.graphics",
+      "share": 0.12770137524557956,
+      "documents": 3563,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 6,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.23887748117727584,
+      "documents": 2922,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 8,
+      "topic": 7,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.33544303797468356,
+      "documents": 632,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 0,
+      "dominant_class": "sci.med",
+      "share": 0.1602626459143969,
+      "documents": 4112,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 1,
+      "dominant_class": "comp.graphics",
+      "share": 0.13016411997736277,
+      "documents": 3534,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 2,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5305059523809523,
+      "documents": 1344,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 3,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.376940133037694,
+      "documents": 1353,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 4,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.5400593471810089,
+      "documents": 1348,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 5,
+      "dominant_class": "rec.autos",
+      "share": 0.3627329192546584,
+      "documents": 1610,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 6,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.2618588507520247,
+      "documents": 2593,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 8,
+      "topic": 7,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.37582128777923784,
+      "documents": 761,
+      "k_setting": "graph_discovered_k"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 0,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.38257575757575757,
+      "documents": 264,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 1,
+      "dominant_class": "rec.sport.baseball",
+      "share": 0.7297297297297297,
+      "documents": 222,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 2,
+      "dominant_class": "sci.space",
+      "share": 0.5567226890756303,
+      "documents": 476,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 3,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.21890547263681592,
+      "documents": 603,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 4,
+      "dominant_class": "comp.graphics",
+      "share": 0.12077922077922078,
+      "documents": 770,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 5,
+      "dominant_class": "rec.autos",
+      "share": 0.47058823529411764,
+      "documents": 867,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 6,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.7736318407960199,
+      "documents": 402,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 7,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.5758754863813229,
+      "documents": 771,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 8,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.30551181102362207,
+      "documents": 1270,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 9,
+      "dominant_class": "rec.sport.baseball",
+      "share": 0.12790355777712437,
+      "documents": 3401,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 10,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.33497536945812806,
+      "documents": 203,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 11,
+      "dominant_class": "comp.windows.x",
+      "share": 0.47440273037542663,
+      "documents": 1172,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 12,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.3154796939376104,
+      "documents": 1699,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 13,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.8514851485148515,
+      "documents": 404,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 14,
+      "dominant_class": "comp.graphics",
+      "share": 0.4072494669509595,
+      "documents": 469,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 15,
+      "dominant_class": "misc.forsale",
+      "share": 0.4709864603481625,
+      "documents": 1034,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 16,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.19727891156462585,
+      "documents": 1617,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 17,
+      "dominant_class": "sci.med",
+      "share": 0.24028268551236748,
+      "documents": 283,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 18,
+      "dominant_class": "sci.crypt",
+      "share": 0.5205479452054794,
+      "documents": 584,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 1,
+      "k": 20,
+      "topic": 19,
+      "dominant_class": "comp.graphics",
+      "share": 0.5972222222222222,
+      "documents": 144,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 0,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5637030247479377,
+      "documents": 1091,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 1,
+      "dominant_class": "comp.windows.x",
+      "share": 0.5027777777777778,
+      "documents": 360,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 2,
+      "dominant_class": "comp.graphics",
+      "share": 0.2917933130699088,
+      "documents": 329,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 3,
+      "dominant_class": "comp.sys.mac.hardware",
+      "share": 0.21755725190839695,
+      "documents": 2620,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 4,
+      "dominant_class": "comp.graphics",
+      "share": 0.3186646433990895,
+      "documents": 659,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 5,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.6350461133069829,
+      "documents": 759,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 6,
+      "dominant_class": "alt.atheism",
+      "share": 0.17059483726150393,
+      "documents": 2673,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 7,
+      "dominant_class": "sci.space",
+      "share": 0.621301775147929,
+      "documents": 507,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 8,
+      "dominant_class": "misc.forsale",
+      "share": 0.5924764890282131,
+      "documents": 319,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 9,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.27970897332255457,
+      "documents": 1237,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 10,
+      "dominant_class": "sci.med",
+      "share": 0.6105675146771037,
+      "documents": 511,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 11,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.19333333333333333,
+      "documents": 150,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 12,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.43373493975903615,
+      "documents": 249,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 13,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.19611436950146627,
+      "documents": 2728,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 14,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.5384615384615384,
+      "documents": 78,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 15,
+      "dominant_class": "talk.politics.misc",
+      "share": 0.2972972972972973,
+      "documents": 37,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 16,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.3569620253164557,
+      "documents": 395,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 17,
+      "dominant_class": "sci.crypt",
+      "share": 0.23370786516853934,
+      "documents": 445,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 18,
+      "dominant_class": "comp.graphics",
+      "share": 0.12268314210061783,
+      "documents": 1133,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 2,
+      "k": 20,
+      "topic": 19,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.7973333333333333,
+      "documents": 375,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 0,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.3279785809906292,
+      "documents": 747,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 1,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.375,
+      "documents": 680,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 2,
+      "dominant_class": "sci.space",
+      "share": 0.5406125166444741,
+      "documents": 751,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 3,
+      "dominant_class": "sci.crypt",
+      "share": 0.38317757009345793,
+      "documents": 214,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 4,
+      "dominant_class": "talk.politics.misc",
+      "share": 0.1576923076923077,
+      "documents": 260,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 5,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.3586206896551724,
+      "documents": 580,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 6,
+      "dominant_class": "misc.forsale",
+      "share": 0.23931623931623933,
+      "documents": 234,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 7,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.142,
+      "documents": 500,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 8,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.597752808988764,
+      "documents": 890,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 9,
+      "dominant_class": "rec.sport.baseball",
+      "share": 0.19923371647509577,
+      "documents": 522,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 10,
+      "dominant_class": "misc.forsale",
+      "share": 0.49853801169590645,
+      "documents": 684,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 11,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.6211251435132032,
+      "documents": 871,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 12,
+      "dominant_class": "alt.atheism",
+      "share": 0.19290780141843972,
+      "documents": 1410,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 13,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.23868954758190328,
+      "documents": 641,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 14,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.8737113402061856,
+      "documents": 388,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 15,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.27728613569321536,
+      "documents": 2373,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 16,
+      "dominant_class": "sci.med",
+      "share": 0.38733705772811916,
+      "documents": 1074,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 17,
+      "dominant_class": "sci.crypt",
+      "share": 0.737037037037037,
+      "documents": 270,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 18,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.10551558752997602,
+      "documents": 2085,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "LDA",
+      "seed": 3,
+      "k": 20,
+      "topic": 19,
+      "dominant_class": "comp.windows.x",
+      "share": 0.3436866981769075,
+      "documents": 1481,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 0,
+      "dominant_class": "sci.med",
+      "share": 0.15373961218836565,
+      "documents": 1444,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 1,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.504950495049505,
+      "documents": 404,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 2,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.4896551724137931,
+      "documents": 580,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 3,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.3145780051150895,
+      "documents": 391,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 4,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.5723684210526315,
+      "documents": 1064,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 5,
+      "dominant_class": "comp.graphics",
+      "share": 0.1013299556681444,
+      "documents": 1579,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 6,
+      "dominant_class": "sci.crypt",
+      "share": 0.616822429906542,
+      "documents": 642,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 7,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.3883089770354906,
+      "documents": 479,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 8,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.894878706199461,
+      "documents": 371,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 9,
+      "dominant_class": "rec.autos",
+      "share": 0.6902927580893683,
+      "documents": 649,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 10,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.3410493827160494,
+      "documents": 648,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 11,
+      "dominant_class": "sci.med",
+      "share": 0.14565217391304347,
+      "documents": 920,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 12,
+      "dominant_class": "sci.med",
+      "share": 0.1104,
+      "documents": 625,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 13,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5393939393939394,
+      "documents": 825,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 14,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.33695652173913043,
+      "documents": 276,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 15,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.7057142857142857,
+      "documents": 350,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 16,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.25255536626916525,
+      "documents": 2348,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 17,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.8969957081545065,
+      "documents": 466,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 18,
+      "dominant_class": "misc.forsale",
+      "share": 0.45228215767634855,
+      "documents": 1205,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 1,
+      "k": 20,
+      "topic": 19,
+      "dominant_class": "comp.windows.x",
+      "share": 0.2598992080633549,
+      "documents": 1389,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 0,
+      "dominant_class": "sci.med",
+      "share": 0.15273972602739727,
+      "documents": 1460,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 1,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.505,
+      "documents": 400,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 2,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.47554806070826305,
+      "documents": 593,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 3,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.3159340659340659,
+      "documents": 364,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 4,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.5856573705179283,
+      "documents": 1004,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 5,
+      "dominant_class": "sci.electronics",
+      "share": 0.11062225015713388,
+      "documents": 1591,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 6,
+      "dominant_class": "misc.forsale",
+      "share": 0.5800604229607251,
+      "documents": 662,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 7,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.3752535496957404,
+      "documents": 493,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 8,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.8884120171673819,
+      "documents": 233,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 9,
+      "dominant_class": "rec.autos",
+      "share": 0.6824644549763034,
+      "documents": 633,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 10,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.31210191082802546,
+      "documents": 628,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 11,
+      "dominant_class": "sci.crypt",
+      "share": 0.6234458259325044,
+      "documents": 563,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 12,
+      "dominant_class": "comp.sys.mac.hardware",
+      "share": 0.13561847988077497,
+      "documents": 671,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 13,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.5403800475059383,
+      "documents": 842,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 14,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.3333333333333333,
+      "documents": 303,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 15,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.8303964757709251,
+      "documents": 454,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 16,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.13661971830985917,
+      "documents": 710,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 17,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.20479368932038836,
+      "documents": 3296,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 18,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.8806584362139918,
+      "documents": 486,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 2,
+      "k": 20,
+      "topic": 19,
+      "dominant_class": "comp.windows.x",
+      "share": 0.2844759653270292,
+      "documents": 1269,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 0,
+      "dominant_class": "sci.med",
+      "share": 0.10154905335628227,
+      "documents": 581,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 1,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.5045871559633027,
+      "documents": 436,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 2,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.47183098591549294,
+      "documents": 568,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 3,
+      "dominant_class": "comp.os.ms-windows.misc",
+      "share": 0.3128205128205128,
+      "documents": 390,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 4,
+      "dominant_class": "soc.religion.christian",
+      "share": 0.5743380855397149,
+      "documents": 982,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 5,
+      "dominant_class": "sci.electronics",
+      "share": 0.11432414256893074,
+      "documents": 1487,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 6,
+      "dominant_class": "misc.forsale",
+      "share": 0.5675287356321839,
+      "documents": 696,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 7,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.38735177865612647,
+      "documents": 506,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 8,
+      "dominant_class": "talk.politics.guns",
+      "share": 0.2804878048780488,
+      "documents": 1558,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 9,
+      "dominant_class": "rec.autos",
+      "share": 0.6656671664167916,
+      "documents": 667,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 10,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.33212341197822143,
+      "documents": 551,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 11,
+      "dominant_class": "sci.crypt",
+      "share": 0.5962099125364432,
+      "documents": 686,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 12,
+      "dominant_class": "comp.sys.mac.hardware",
+      "share": 0.16831683168316833,
+      "documents": 707,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 13,
+      "dominant_class": "rec.sport.hockey",
+      "share": 0.535840188014101,
+      "documents": 851,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 14,
+      "dominant_class": "comp.sys.ibm.pc.hardware",
+      "share": 0.1426056338028169,
+      "documents": 568,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 15,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.7540453074433657,
+      "documents": 309,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 16,
+      "dominant_class": "rec.motorcycles",
+      "share": 0.8898876404494382,
+      "documents": 445,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 17,
+      "dominant_class": "talk.politics.mideast",
+      "share": 0.7826961770623743,
+      "documents": 497,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 18,
+      "dominant_class": "comp.windows.x",
+      "share": 0.26071428571428573,
+      "documents": 1400,
+      "k_setting": "true_20_classes"
+    },
+    {
+      "method": "NMF",
+      "seed": 3,
+      "k": 20,
+      "topic": 19,
+      "dominant_class": "sci.med",
+      "share": 0.11046931407942238,
+      "documents": 2770,
+      "k_setting": "true_20_classes"
+    }
+  ]
+}

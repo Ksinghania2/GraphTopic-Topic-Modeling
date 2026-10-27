@@ -1,5 +1,5 @@
-"""Reproduces every number / figure used in the report.  python run_experiments.py"""
-import json, sys, time, os
+"""Reproduces synthetic experiments and figures.  python run_experiments.py"""
+import csv, json, sys, time, os
 import numpy as np
 import matplotlib.pyplot as plt
 from gtopic import GraphTopicModel
@@ -10,6 +10,120 @@ from gtopic.visualize import *
 
 FIG = "results/figures"; os.makedirs(FIG, exist_ok=True)
 R = {}
+
+def run_timing_only():
+    """Five-run timing check used to verify the 2,500 / 5,000 document result."""
+    texts, _ = generate_corpus(12000, seed=21)
+    prep_model = GraphTopicModel()
+    prep_model.pre.fit(texts[:12000])
+    docs = prep_model.pre.transform(texts)
+    V = len(prep_model.pre.id2word)
+    rows = []
+    for n in (2500, 5000):
+        subset = docs[:n]
+        # Warm each implementation before recording any measurements.
+        warmup = GraphTopicModel(seed=0, preprocessor=prep_model.pre)
+        warmup.id2word = prep_model.pre.id2word
+        warmup.fit_ids(subset)
+        run_lda(subset, V, 10, seed=0)
+        run_nmf(subset, V, 10, seed=0)
+        timings = {"Graph": [], "LDA": [], "NMF": []}
+        for seed in range(1, 6):
+            graph = GraphTopicModel(seed=seed, preprocessor=prep_model.pre)
+            graph.id2word = prep_model.pre.id2word
+            started = time.perf_counter()
+            graph.fit_ids(subset)
+            timings["Graph"].append(time.perf_counter() - started)
+            for name, runner in (("LDA", run_lda), ("NMF", run_nmf)):
+                started = time.perf_counter()
+                runner(subset, V, 10, seed=seed)
+                timings[name].append(time.perf_counter() - started)
+        row = {"documents": n, "tokens": int(sum(map(len, subset)))}
+        for method, samples in timings.items():
+            row[f"{method}_mean_seconds"] = float(np.mean(samples))
+            row[f"{method}_std_seconds"] = float(np.std(samples))
+        rows.append(row)
+        print(f"TIMING n={n}: " + " | ".join(
+            f"{method}={row[f'{method}_mean_seconds']:.4f}±{row[f'{method}_std_seconds']:.4f}s"
+            for method in timings
+        ), flush=True)
+    for method in ("Graph", "LDA", "NMF"):
+        smaller, larger = (r[f"{method}_mean_seconds"] for r in rows)
+        print(f"CHECK {method}: 5000-doc mean "
+              f"{'below' if larger < smaller else 'not below'} 2500-doc mean "
+              f"({larger:.4f}s vs {smaller:.4f}s)", flush=True)
+    os.makedirs("results", exist_ok=True)
+    with open("results/scalability_timing.json", "w", encoding="utf-8") as handle:
+        json.dump({"warmup_runs_per_method_and_size": 1, "measured_runs": 5, "results": rows},
+                  handle, indent=2)
+    with open("results/scalability_timing.csv", "w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    print("Saved results/scalability_timing.json and results/scalability_timing.csv", flush=True)
+
+def run_harder_synthetic_only():
+    """Run and save the deliberately high-overlap, high-noise synthetic setting."""
+    n_docs, seed, noise, mix = 6000, 11, 0.65, 0.75
+    texts, labels = generate_corpus(n_docs, seed=seed, noise=noise, mix=mix)
+    labels = np.asarray(labels)
+    model = GraphTopicModel(seed=42)
+    started = time.perf_counter()
+    model.fit(texts)
+    graph_seconds = time.perf_counter() - started
+    docs = model.pre.transform(texts)
+    binary = doc_term_binary(docs, len(model.id2word))
+    ids = {word: idx for idx, word in enumerate(model.id2word)}
+    graph_pred = model.doc_topic_matrix(docs).argmax(axis=1)
+    graph_scores = evaluate(
+        [[ids[word] for word in words] for words in model.top_words()],
+        binary, labels, graph_pred, LABELS,
+    )
+    rows = [{
+        "method": "GraphTopic", "seed": 42, "k": len(model.communities),
+        "seconds": graph_seconds,
+        **{metric: graph_scores[metric] for metric in
+           ("npmi_coherence", "nmi", "ari", "purity")},
+    }]
+    for name, runner in (("LDA", run_lda), ("NMF", run_nmf)):
+        started = time.perf_counter()
+        result = runner(docs, len(model.id2word), len(LABELS), seed=seed)
+        elapsed = time.perf_counter() - started
+        scores = evaluate(result["topics"], binary, labels, result["pred"], LABELS)
+        rows.append({
+            "method": name, "seed": seed, "k": len(LABELS), "seconds": elapsed,
+            **{metric: scores[metric] for metric in
+               ("npmi_coherence", "nmi", "ari", "purity")},
+        })
+    payload = {
+        "dataset": {"n_documents": n_docs, "seed": seed, "noise": noise, "mix": mix,
+                    "vocabulary_size": len(model.id2word), "n_classes": len(LABELS)},
+        "protocol": "Single fixed-seed run; shared preprocessed data and vocabulary for all methods.",
+        "results": rows,
+    }
+    os.makedirs("results", exist_ok=True)
+    with open("results/harder_synthetic_results.json", "w", encoding="utf-8") as handle:
+        json.dump(payload, handle, indent=2)
+    with open("results/harder_synthetic_results.csv", "w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    for row in rows:
+        print(f"{row['method']} k={row['k']} NMI={row['nmi']:.4f} "
+              f"ARI={row['ari']:.4f} purity={row['purity']:.4f} "
+              f"NPMI={row['npmi_coherence']:.4f} time={row['seconds']:.2f}s", flush=True)
+    print("Saved results/harder_synthetic_results.json and .csv", flush=True)
+
+if "--timing-only" in sys.argv:
+    if len(sys.argv) != 2:
+        raise SystemExit("Use --timing-only by itself.")
+    run_timing_only()
+    raise SystemExit(0)
+if "--hard-synthetic-only" in sys.argv:
+    if len(sys.argv) != 2:
+        raise SystemExit("Use --hard-synthetic-only by itself.")
+    run_harder_synthetic_only()
+    raise SystemExit(0)
 
 def prep(texts, **kw):
     m = GraphTopicModel(**kw); m.pre.fit(texts); docs = m.pre.transform(texts); m.id2word = m.pre.id2word
@@ -54,14 +168,22 @@ R["graph_stats"] = {"avg_degree": round(float(degs.mean()), 1), "max_degree": in
                     "clustering": round(float(__import__("networkx").average_clustering(m.graph, weight="weight")), 3),
                     "components": int(__import__("networkx").number_connected_components(m.graph))}
 
-# ----------------------------------------------- baselines (3 seeds, k = K)
+# ----------------------------------------------- comparison (5 seeds, k = K)
+graph_warmup = GraphTopicModel(seed=0); graph_warmup.pre = m.pre; graph_warmup.id2word = m.id2word
+graph_warmup.fit_ids(docs)
+run_lda(docs, V, K, seed=0)
+run_nmf(docs, V, K, seed=0)
 rows = {"Graph (Louvain)": [], "LDA": [], "NMF": []}
-for seed in (1, 2, 3):
-    mg = GraphTopicModel(seed=seed); mg.pre = m.pre; mg.id2word = m.id2word; mg.fit_ids(docs)
-    e, _ = graph_eval(mg, docs, y, B); e["time"] = mg.timing["total"] - mg.timing.get("preprocess", 0); e["k"] = len(mg.communities)
+for seed in range(1, 6):
+    mg = GraphTopicModel(seed=seed); mg.pre = m.pre; mg.id2word = m.id2word
+    started = time.perf_counter(); mg.fit_ids(docs)
+    graph_seconds = time.perf_counter() - started
+    e, _ = graph_eval(mg, docs, y, B); e["time"] = graph_seconds; e["k"] = len(mg.communities)
     rows["Graph (Louvain)"].append(e)
     for name, fn in (("LDA", run_lda), ("NMF", run_nmf)):
-        r = fn(docs, V, K, seed=seed); e = evaluate(r["topics"], B, y, r["pred"]); e["time"] = r["time"]; e["k"] = K
+        started = time.perf_counter(); r = fn(docs, V, K, seed=seed)
+        seconds = time.perf_counter() - started
+        e = evaluate(r["topics"], B, y, r["pred"]); e["time"] = seconds; e["k"] = K
         rows[name].append(e)
 comp = {}
 for name, lst in rows.items():
@@ -96,10 +218,10 @@ R["window_sweep"] = ws
 
 # ------------------------------------------------------ noise robustness
 rob = []
-for noise in (0.05, 0.18, 0.35, 0.5):
-    t2, y2 = generate_corpus(6000, seed=11, noise=noise); y2 = np.array(y2)
+for noise, mix in ((0.05, 0.4), (0.18, 0.4), (0.35, 0.4), (0.5, 0.4), (0.65, 0.75)):
+    t2, y2 = generate_corpus(6000, seed=11, noise=noise, mix=mix); y2 = np.array(y2)
     m2, d2 = prep(t2); B2 = doc_term_binary(d2, len(m2.id2word)); m2.fit_ids(d2)
-    e, _ = graph_eval(m2, d2, y2, B2); row = {"noise": noise, "Graph": e["nmi"], "k": len(m2.communities)}
+    e, _ = graph_eval(m2, d2, y2, B2); row = {"noise": noise, "mix": mix, "Graph": e["nmi"], "k": len(m2.communities)}
     for name, fn in (("LDA", run_lda), ("NMF", run_nmf)):
         r = fn(d2, len(m2.id2word), len(LABELS)); row[name] = evaluate(r["topics"], B2, y2, r["pred"])["nmi"]
     # graph with k forced equal to truth is not possible for Louvain; report found k
@@ -112,9 +234,24 @@ mb = GraphTopicModel(); mb.pre.fit(big_t[:12000]); big_docs = mb.pre.transform(b
 sc = []
 for n in (1000, 2500, 5000, 10000, 20000, 40000):
     d = big_docs[:n]; row = {"n": n, "tokens": int(sum(len(x) for x in d))}
-    g = GraphTopicModel(); g.pre = mb.pre; g.id2word = mb.id2word; g.fit_ids(d); row["Graph"] = g.timing["total"] - g.timing.get("preprocess", 0)
-    row["LDA"] = run_lda(d, len(mb.id2word), 10)["time"]; row["NMF"] = run_nmf(d, len(mb.id2word), 10)["time"]
-    sc.append(row); print("scale", row)
+    graph_warmup = GraphTopicModel(seed=0); graph_warmup.pre = mb.pre; graph_warmup.id2word = mb.id2word
+    graph_warmup.fit_ids(d)
+    run_lda(d, len(mb.id2word), 10, seed=0)
+    run_nmf(d, len(mb.id2word), 10, seed=0)
+    timings = {"Graph": [], "LDA": [], "NMF": []}
+    for seed in range(1, 6):
+        g = GraphTopicModel(seed=seed); g.pre = mb.pre; g.id2word = mb.id2word
+        started = time.perf_counter(); g.fit_ids(d)
+        timings["Graph"].append(time.perf_counter() - started)
+        for name, runner in (("LDA", run_lda), ("NMF", run_nmf)):
+            started = time.perf_counter(); runner(d, len(mb.id2word), 10, seed=seed)
+            timings[name].append(time.perf_counter() - started)
+    for name, samples in timings.items():
+        row[name] = float(np.mean(samples))
+        row[f"{name}_std"] = float(np.std(samples))
+    sc.append(row); print("scale", row, flush=True)
+R["scalability_protocol"] = {"warmup_runs_per_method_and_size": 1, "measured_runs": 5,
+                              "timer": "time.perf_counter"}
 R["scalability"] = sc
 
 json.dump(R, open("results/results.json", "w"), indent=1, default=float)
@@ -146,7 +283,7 @@ for name, c in (("Graph", PALETTE[0]), ("LDA", PALETTE[1]), ("NMF", PALETTE[2]))
 ax[0].set_xscale("log"); ax[0].set_yscale("log"); ax[0].set_xlabel("Number of documents"); ax[0].set_ylabel("Seconds"); ax[0].legend(frameon=False); ax[0].set_title("Scalability")
 for name, c in (("Graph", PALETTE[0]), ("LDA", PALETTE[1]), ("NMF", PALETTE[2])):
     ax[1].plot([r["noise"] for r in rob], [r[name] for r in rob], "o-", label=name, color=c)
-ax[1].set_xlabel("Cross-topic noise probability"); ax[1].set_ylabel("NMI"); ax[1].set_title("Robustness to noise"); ax[1].legend(frameon=False)
+ax[1].set_xlabel("Cross-topic noise probability"); ax[1].set_ylabel("NMI"); ax[1].set_title("Final point also uses mix=0.75"); ax[1].legend(frameon=False)
 fig.tight_layout(); save(fig, "fig_scal_noise")
 
 fig, ax = plt.subplots(1, 2, figsize=(10, 3.3))

@@ -1,0 +1,43 @@
+{
+  "dataset": {
+    "n_documents": 6000,
+    "seed": 11,
+    "noise": 0.65,
+    "mix": 0.75,
+    "vocabulary_size": 560,
+    "n_classes": 10
+  },
+  "protocol": "Single fixed-seed run; shared preprocessed data and vocabulary for all methods.",
+  "results": [
+    {
+      "method": "GraphTopic",
+      "seed": 42,
+      "k": 10,
+      "seconds": 5.335214400023688,
+      "npmi_coherence": 0.48836830378565554,
+      "nmi": 0.8735743253001833,
+      "ari": 0.8953638444713936,
+      "purity": 0.9516666666666667
+    },
+    {
+      "method": "LDA",
+      "seed": 11,
+      "k": 10,
+      "seconds": 41.53585620003287,
+      "npmi_coherence": 0.4318449745898385,
+      "nmi": 0.8751658513346872,
+      "ari": 0.8967653132414656,
+      "purity": 0.9523333333333334
+    },
+    {
+      "method": "NMF",
+      "seed": 11,
+      "k": 10,
+      "seconds": 0.4847530999686569,
+      "npmi_coherence": 0.4538066278791459,
+      "nmi": 0.8517911618759327,
+      "ari": 0.8711653973955783,
+      "purity": 0.94
+    }
+  ]
+}

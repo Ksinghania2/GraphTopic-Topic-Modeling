@@ -34,10 +34,12 @@ fig.tight_layout(); save(fig, "fig_resolution")
 
 fig, ax = plt.subplots(1, 2, figsize=(7.2, 2.7))
 for name, c in (("Graph", PALETTE[0]), ("LDA", PALETTE[1]), ("NMF", PALETTE[2])):
-    ax[0].plot([s["n"] for s in sc], [s[name] for s in sc], "o-", label=name, color=c, ms=4)
+    ax[0].errorbar([s["n"] for s in sc], [s[name] for s in sc],
+                   yerr=[s.get(f"{name}_std", 0) for s in sc],
+                   fmt="o-", label=name, color=c, ms=4, capsize=2)
     ax[1].plot([r["noise"] for r in rob], [r[name] for r in rob], "o-", label=name, color=c, ms=4)
 ax[0].set_xscale("log"); ax[0].set_yscale("log"); ax[0].set_xlabel("Number of documents"); ax[0].set_ylabel("Seconds"); ax[0].legend(frameon=False); ax[0].set_title("Scalability")
-ax[1].set_xlabel("Cross-topic noise probability"); ax[1].set_ylabel("NMI"); ax[1].set_title("Robustness to noise"); ax[1].legend(frameon=False)
+ax[1].set_xlabel("Cross-topic noise probability"); ax[1].set_ylabel("NMI"); ax[1].set_title("Final point also uses mix=0.75"); ax[1].legend(frameon=False)
 fig.tight_layout(); save(fig, "fig_scal_noise")
 
 degs = np.array([d for _, d in m.graph.degree()])

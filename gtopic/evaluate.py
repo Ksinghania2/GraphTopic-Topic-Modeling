@@ -44,10 +44,35 @@ def purity(y_true, y_pred) -> float:
     return tot / len(y_true)
 
 
-def evaluate(topics_ids: list[list[int]], B, y_true=None, y_pred=None) -> dict:
+def topic_class_mapping(y_true, y_pred, class_names=None) -> list[dict]:
+    """Map each predicted topic to its most frequent class and within-topic share."""
+    y_true, y_pred = np.asarray(y_true), np.asarray(y_pred)
+    class_values = np.unique(y_true)
+    mapping = []
+    for topic in np.unique(y_pred):
+        labels, counts = np.unique(y_true[y_pred == topic], return_counts=True)
+        dominant = labels[int(np.argmax(counts))]
+        if class_names is None:
+            dominant_name = dominant.item()
+        else:
+            class_index = int(dominant) if np.issubdtype(labels.dtype, np.integer) else int(
+                np.flatnonzero(class_values == dominant)[0]
+            )
+            dominant_name = class_names[class_index]
+        mapping.append({
+            "topic": int(topic),
+            "dominant_class": dominant_name,
+            "share": float(counts.max() / counts.sum()),
+            "documents": int(counts.sum()),
+        })
+    return mapping
+
+
+def evaluate(topics_ids: list[list[int]], B, y_true=None, y_pred=None, class_names=None) -> dict:
     coh = npmi_coherence(topics_ids, B)
     out = {"npmi_coherence": float(np.mean(coh)), "per_topic_npmi": coh, "diversity": topic_diversity(topics_ids)}
     if y_true is not None and y_pred is not None:
         out.update(nmi=float(normalized_mutual_info_score(y_true, y_pred)),
-                   ari=float(adjusted_rand_score(y_true, y_pred)), purity=float(purity(y_true, y_pred)))
+                   ari=float(adjusted_rand_score(y_true, y_pred)), purity=float(purity(y_true, y_pred)),
+                   topic_class_mapping=topic_class_mapping(y_true, y_pred, class_names))
     return out
