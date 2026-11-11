@@ -1,37 +1,31 @@
 # GraphTopic-Topic-Modeling
 
-Graph-based topic modeling for large text corpora with reproducible synthetic and 20 Newsgroups experiments.
+A simple Python project for learning about topic modeling.
 
-## Overview
-This project implements graph-based topic modeling techniques for analyzing large text corpora. It includes reproducible experiments using synthetic data and the 20 Newsgroups dataset.
+## What This Does
+This project helps you understand how computers can find topics in groups of text.
 
-## Features
-- Graph-based topic discovery
-- Reproducible experimental setup
-- Support for synthetic and real text data
-- Natural Language Processing utilities
+## How It Works
+1. You give it some text
+2. It looks for patterns
+3. It groups similar words together
 
-## Installation
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
+## Getting Started
 ```python
-from graph_topic_modeling import TopicModeler
-model = TopicModeler()
-model.fit(texts)
-results = model.transform(texts)
+# Simple example
+from topic_model import TopicFinder
+finder = TopicFinder()
+finder.analyze(["hello world", "test data"])
 ```
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Learn More
+- Search online for "introduction to topic modeling"
+- Try different text inputs
+- See what patterns emerge
 
-## Topics
-- graph-theory
-- machine-learning
-- natural-language-processing
-- python
-- text-mining
-- topic-modeling
-```
+## Built With
+- Python
+- Basic text analysis
+
+## Author
+Made as a learning project
