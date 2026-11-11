@@ -1,25 +1,13 @@
 # Python
+*.pyc
 __pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-.eggs/
-dist/
-build/
-.venv/
-venv/
-env/
 
-# Probe / scratch
-_probe.py
-_probe_result.txt
-/results/cli_output/
+# Distribution
+/
+!/README.md
+!/LICENSE
+!/requirements.txt
 
-# IDE / OS
-.vscode/
+# IDE
 .idea/
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
+.vscode/
