@@ -29,3 +29,9 @@ finder.analyze(["hello world", "test data"])
 
 ## Author
 Made as a learning project
+
+## Faster Web Demo
+The web app uses a deterministic, label-balanced 2,000-document subset of the 12,000-document
+corpus for its quick presentation demo. It caches the computed sample analysis for repeat runs in
+the same process and creates charts only when the technical-results section is opened. Uploaded
+and pasted corpora continue to use the full provided input.

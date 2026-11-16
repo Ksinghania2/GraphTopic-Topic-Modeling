@@ -15,6 +15,28 @@ def test_home_page_loads(client):
 
     assert response.status_code == 200
     assert b"GraphTopic" in response.data
+    assert b"balanced 2,000" in response.data
+
+
+def test_sample_demo_subset_is_balanced_and_deterministic():
+    texts = [f"document {index}" for index in range(12)]
+    labels = ["space"] * 4 + ["health"] * 4 + ["sports"] * 4
+
+    selected_texts, selected_labels = web_app.sample_demo_subset(texts, labels, limit=6)
+    repeated_texts, repeated_labels = web_app.sample_demo_subset(texts, labels, limit=6)
+
+    assert selected_texts == repeated_texts
+    assert selected_labels == repeated_labels
+    assert selected_labels.count("space") == 2
+    assert selected_labels.count("health") == 2
+    assert selected_labels.count("sports") == 2
+
+
+def test_visualizations_reject_expired_session(client):
+    response = client.get("/visualizations/not-a-session")
+
+    assert response.status_code == 404
+    assert "error" in response.get_json()
 
 
 @pytest.mark.parametrize(
