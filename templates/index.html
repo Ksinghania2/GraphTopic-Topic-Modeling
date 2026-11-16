@@ -1,29 +1,122 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GraphTopic – Topic extraction with word-network communities</title><link rel="stylesheet" href="/static/style.css"></head><body>
-<header><div class="wrap"><span class="pill">Mini Project · Manipal University Jaipur</span>
-<h1>GraphTopic</h1><p>Graph-based topic extraction from large text corpora: word co-occurrence network &rarr; community detection &rarr; topics.</p></div></header>
-<div class="wrap">
-<form class="card" method="post" action="/analyze" enctype="multipart/form-data">
-<h2>1 · Choose a corpus</h2>
-<div class="tabs">
- <label><input type="radio" name="source" value="sample" checked onchange="sw()"><span>Sample news corpus (12,000 docs)</span></label>
- <label><input type="radio" name="source" value="upload" onchange="sw()"><span>Upload CSV / TXT</span></label>
- <label><input type="radio" name="source" value="paste" onchange="sw()"><span>Paste text</span></label></div>
-<div id="p-sample" class="hint">Labelled synthetic news-style corpus across 10 subjects (space, medicine, sports, finance, AI, climate, food, politics, education, travel). Fast demo – completes in a few seconds and reports accuracy against the known labels.</div>
-<div id="p-upload" style="display:none"><label>File (.csv with a text column, or .txt with documents separated by blank lines)</label><input type="file" name="file" accept=".csv,.txt">
- <label>CSV text column</label><input type="text" name="text_col" value="text"></div>
-<div id="p-paste" style="display:none"><label>Documents (separate documents by a blank line, at least 20)</label><textarea name="text" placeholder="Paste your documents here…"></textarea></div>
-<h2 style="margin-top:22px">2 · Parameters</h2>
-<div class="grid"><div><label>Co-occurrence window (tokens)</label><input type="number" name="window" value="8" min="2" max="40"></div>
-<div><label>Louvain resolution γ</label><input type="number" step="0.1" name="resolution" value="1.0" min="0.1" max="5"></div>
-<div><label>Top words per topic</label><input type="number" name="topn" value="10" min="5" max="20"></div></div>
-<p class="hint">Larger window → denser graph. Lower γ → fewer, broader topics; higher γ → more, finer topics.</p>
-{% if error %}<div class="err">{{ error }}</div>{% endif %}
-<button type="submit">Extract topics</button></form>
-<div class="card"><h2>How it works</h2><div class="grid">
-<div><b>1. Clean</b><p class="hint">Tokenise, remove stop-words, lemmatise, detect phrases.</p></div>
-<div><b>2. Build graph</b><p class="hint">Words are nodes; edges carry NPMI of sliding-window co-occurrence.</p></div>
-<div><b>3. Detect communities</b><p class="hint">Louvain finds densely connected word groups – each is a topic.</p></div>
-<div><b>4. Infer</b><p class="hint">Documents receive topic distributions from word memberships.</p></div></div></div></div>
-<footer>Department of Computer and Communication Engineering · Manipal University Jaipur</footer>
-<script>function sw(){const v=document.querySelector('[name=source]:checked').value;for(const k of['sample','upload','paste'])document.getElementById('p-'+k).style.display=k===v?'block':'none'}</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10172b">
+  <title>GraphTopic · Find the ideas hidden in text</title>
+  <link rel="stylesheet" href="/static/style.css?v=4">
+</head>
+<body>
+<header class="hero">
+  <div class="wrap hero-inner">
+    <a class="brand" href="/" aria-label="GraphTopic home"><span class="brand-mark">G</span> GraphTopic</a>
+    <span class="school-tag">B.Tech mini project <span>·</span> Manipal University Jaipur</span>
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="live-dot"></span> TEXT ANALYSIS, MADE VISUAL</p>
+      <h1>Find the ideas<br>hidden in <em>text.</em></h1>
+      <p class="hero-description">GraphTopic groups words that often appear together, then turns those groups into easy-to-understand topics.</p>
+      <a class="button button-light" href="#start">Try the live demo <span aria-hidden="true">↓</span></a>
+      <span class="hero-note">No setup. Sample data included.</span>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+      <span class="node node-center">ideas</span><span class="node node-a">space</span>
+      <span class="node node-b">health</span><span class="node node-c">climate</span>
+      <span class="node node-d">sports</span><span class="node node-e">finance</span>
+      <span class="node node-f">AI</span>
+      <span class="connector con-a"></span><span class="connector con-b"></span>
+      <span class="connector con-c"></span><span class="connector con-d"></span>
+      <span class="connector con-e"></span><span class="connector con-f"></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap main-content">
+  <section class="intro-row">
+    <div>
+      <p class="eyebrow eyebrow-dark">THE SIMPLE VERSION</p>
+      <h2>Like sorting a library<br>without reading every book.</h2>
+    </div>
+    <p class="intro-copy">When two words keep showing up near each other, they may be part of the same idea. We draw those connections as a network and let the clusters reveal the subjects.</p>
+  </section>
+
+  <section class="process-grid" aria-label="How GraphTopic works">
+    <article class="process-card"><span class="step-number">01</span><span class="process-icon">文</span><h3>Read</h3><p>Clean up each document and keep its meaningful words.</p></article>
+    <article class="process-card"><span class="step-number">02</span><span class="process-icon">↔</span><h3>Connect</h3><p>Link words that often appear close together.</p></article>
+    <article class="process-card"><span class="step-number">03</span><span class="process-icon">◎</span><h3>Group</h3><p>Find tightly connected word communities in the network.</p></article>
+    <article class="process-card"><span class="step-number">04</span><span class="process-icon">✳</span><h3>Explain</h3><p>Show each topic as a group of its most representative words.</p></article>
+  </section>
+
+  <section id="start" class="demo-layout">
+    <div class="demo-side">
+      <p class="eyebrow eyebrow-dark">YOUR FIRST ANALYSIS</p>
+      <h2>Let’s find some topics.</h2>
+      <p>For your presentation, the sample is the easiest option. It has 12,000 example news-style documents across 10 subjects.</p>
+      <div class="demo-tip"><span class="tip-icon">✦</span><div><b>Presentation tip</b><span>The quick demo uses a balanced 2,000-document sample for faster results. Keep the suggested settings.</span></div></div>
+    </div>
+    <form class="demo-form" method="post" action="/analyze" enctype="multipart/form-data" id="analysis-form">
+      <div class="form-heading"><span class="form-step">STEP 1</span><h3>Choose your text</h3></div>
+      <div class="source-options">
+        <label class="source-option"><input type="radio" name="source" value="sample" checked onchange="sw()"><span class="source-radio"></span>        <span class="source-copy"><b>Use the included sample</b><small>12,000 labelled documents · quick demo analyzes a balanced 2,000</small></span><span class="recommended">EASIEST</span></label>
+        <label class="source-option"><input type="radio" name="source" value="upload" onchange="sw()"><span class="source-radio"></span><span class="source-copy"><b>Upload a file</b><small>Use your own CSV or plain-text documents</small></span></label>
+        <label class="source-option"><input type="radio" name="source" value="paste" onchange="sw()"><span class="source-radio"></span><span class="source-copy"><b>Paste some text</b><small>Provide at least 20 documents</small></span></label>
+      </div>
+      <div id="p-sample" class="sample-note"><span class="sample-icon">✓</span><span>Ready to go. The sample covers space, medicine, sports, finance, AI, climate, food, politics, education and travel.</span></div>
+      <div id="p-upload" class="alternate-input" hidden><label for="file">Choose a CSV or TXT file</label><input id="file" type="file" name="file" accept=".csv,.txt">
+        <label for="text_col">CSV text column <span class="optional">(if applicable)</span></label><input id="text_col" type="text" name="text_col" value="text" placeholder="text"></div>
+      <div id="p-paste" class="alternate-input" hidden><label for="text">Paste documents <span class="optional">— separate documents with a blank line</span></label><textarea id="text" name="text" placeholder="Paste at least 20 documents here…"></textarea></div>
+      <details class="settings">
+        <summary><span>Advanced settings</span><small>Defaults are recommended for your demo</small></summary>
+        <div class="settings-grid"><div><label for="window">Word connection range</label><input id="window" type="number" name="window" value="8" min="2" max="40"><small>How far apart words can be and still connect.</small></div>
+        <div><label for="resolution">Topic detail</label><input id="resolution" type="number" step="0.1" name="resolution" value="1.0" min="0.1" max="5"><small>Higher values tend to create more, smaller topics.</small></div>
+        <div><label for="topn">Words shown per topic</label><input id="topn" type="number" name="topn" value="10" min="5" max="20"></div></div>
+      </details>
+      {% if error %}<div class="err" role="alert">{{ error }}</div>{% endif %}
+      <button class="button button-primary submit-button" type="submit"><span>Find topics</span><span aria-hidden="true">→</span></button>
+      <p id="analysis-status" class="privacy-note" aria-live="polite"></p>
+      <p class="privacy-note">Your text is analyzed locally by this app and is not sent to an external AI service.</p>
+    </form>
+  </section>
+
+  <section class="teacher-note">
+    <div class="teacher-icon">✎</div>
+    <div><p class="eyebrow eyebrow-dark">A SIMPLE WAY TO EXPLAIN IT</p><p class="teacher-script">“My project finds topics by looking at which words appear near each other. It builds a word network, groups strongly connected words, and shows each group as a topic. For example, words like <b>team, match,</b> and <b>score</b> might form a sports topic.”</p></div>
+  </section>
+</main>
+<footer><span class="brand-footer">GraphTopic</span><span>Graph-based topic discovery · Manipal University Jaipur</span></footer>
+<script>
+function sw(){
+  const selected=document.querySelector('[name=source]:checked').value;
+  document.getElementById('p-sample').hidden=selected!=='sample';
+  document.getElementById('p-upload').hidden=selected!=='upload';
+  document.getElementById('p-paste').hidden=selected!=='paste';
+}
+document.getElementById('analysis-form').addEventListener('submit',function(){
+  const button=this.querySelector('.submit-button');
+  const status=document.getElementById('analysis-status');
+  status.textContent=document.querySelector('[name=source]:checked').value==='sample'
+    ? 'Analyzing a balanced 2,000-document sample. Keep this tab open; repeat sample runs are faster.'
+    : 'Analyzing your documents. Keep this tab open while the results are prepared.';
+  button.disabled=true;
+  button.innerHTML='<span class="spinner" aria-hidden="true"></span><span>Finding topics… please wait</span>';
+});
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
+  const targets=document.querySelectorAll('.intro-row,.process-card,.demo-layout,.teacher-note');
+  targets.forEach((element,index)=>{
+    element.classList.add('reveal');
+    element.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*75}ms`);
+  });
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12});
+  targets.forEach((element)=>observer.observe(element));
+}
+</script>
+</body>
+</html>

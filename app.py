@@ -3,6 +3,7 @@ import csv
 import io
 import math
 import os
+import threading
 import uuid
 
 import numpy as np
@@ -18,8 +19,11 @@ app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 25 * 1024 * 1024
 MIN_DOCUMENTS = 20
 MAX_DOCUMENTS = 12_000
+SAMPLE_DEMO_DOCUMENTS = 2_000
 SAMPLE = os.path.join(os.path.dirname(__file__), "data", "news_corpus.csv")
 MODELS: dict[str, GraphTopicModel] = {}          # token -> fitted model (in-memory cache)
+SAMPLE_ANALYSES: dict[tuple[int, float, int], tuple[GraphTopicModel, dict, list[dict]]] = {}
+SAMPLE_ANALYSIS_LOCK = threading.Lock()
 
 
 def parse_parameters(values):
@@ -86,6 +90,26 @@ def fit_model(texts, window, resolution, topn):
     return m
 
 
+def sample_demo_subset(texts, labels, limit=SAMPLE_DEMO_DOCUMENTS):
+    if len(texts) <= limit:
+        return texts, labels
+
+    if labels is None:
+        indices = np.linspace(0, len(texts) - 1, num=limit, dtype=int)
+    else:
+        label_array = np.asarray(labels)
+        classes = np.unique(label_array)
+        per_class = max(1, limit // len(classes))
+        indices = np.sort(np.concatenate([
+            np.flatnonzero(label_array == label)[:per_class]
+            for label in classes
+        ]))[:limit]
+
+    selected_texts = [texts[int(index)] for index in indices]
+    selected_labels = [labels[int(index)] for index in indices] if labels is not None else None
+    return selected_texts, selected_labels
+
+
 @app.route("/")
 def index():
     return render_template("index.html", sample_exists=os.path.exists(SAMPLE))
@@ -100,8 +124,12 @@ def analyze():
         return input_error(str(exc))
 
     labels = None
-    if f.get("source") == "sample":
+    is_sample = f.get("source") == "sample"
+    sample_total = None
+    if is_sample:
         texts, labels = load_corpus(SAMPLE)
+        sample_total = len(texts)
+        texts, labels = sample_demo_subset(texts, labels)
     elif request.files.get("file") and request.files["file"].filename:
         texts = parse_upload(request.files["file"], f.get("text_col", "text") or "text")
     else:
@@ -112,19 +140,60 @@ def analyze():
     if len(texts) < MIN_DOCUMENTS:
         return input_error("Please provide at least 20 documents (separate documents with a blank line).")
 
-    m = fit_model(texts, window, res, topn)
-    if not m.communities:
+    def compute_analysis():
+        model = fit_model(texts, window, res, topn)
+        if not model.communities:
+            return None
+        docs = model.pre.transform(texts)
+        predictions = model.doc_topic_matrix(docs).argmax(1)
+        ids = {word: index for index, word in enumerate(model.id2word)}
+        metrics = evaluate(
+            [[ids[word] for word in words] for words in model.top_words()],
+            doc_term_binary(docs, len(model.id2word)),
+            np.array(labels) if labels else None,
+            predictions if labels else None,
+        )
+        topic_results = [
+            {
+                **topic,
+                "docs": int((predictions == topic["id"]).sum()),
+                "npmi": round(metrics["per_topic_npmi"][topic["id"]], 3),
+            }
+            for topic in model.topics_
+        ]
+        return model, metrics, topic_results
+
+    if is_sample:
+        cache_key = (window, res, topn)
+        with SAMPLE_ANALYSIS_LOCK:
+            analysis = SAMPLE_ANALYSES.get(cache_key)
+            if analysis is None:
+                analysis = compute_analysis()
+                if analysis is not None:
+                    SAMPLE_ANALYSES[cache_key] = analysis
+    else:
+        analysis = compute_analysis()
+
+    if analysis is None:
         return input_error("No topics could be extracted - try a larger corpus or a lower resolution.")
-    docs = m.pre.transform(texts); P = m.doc_topic_matrix(docs); pred = P.argmax(1)
-    ids = {w: i for i, w in enumerate(m.id2word)}
-    ev = evaluate([[ids[w] for w in ws] for ws in m.top_words()], doc_term_binary(docs, len(m.id2word)),
-                  np.array(labels) if labels else None, pred if labels else None)
+
+    m, ev, topics = analysis
     tokens = uuid.uuid4().hex[:10]; MODELS[tokens] = m
     if len(MODELS) > 5: MODELS.pop(next(iter(MODELS)))
-    topics = [{**t, "docs": int((pred == t["id"]).sum()), "npmi": round(ev["per_topic_npmi"][t["id"]], 3)} for t in m.topics_]
     return render_template("results.html", token=tokens, n_docs=len(texts), s=m.summary(), ev=ev, topics=topics,
-                           net=to_b64(network_figure(m, ncol=3, fontsize=8, width_in=12)), bars=to_b64(topic_bars(m, ncols=4)),
-                           has_labels=labels is not None, bridge=m.bridge_words(8))
+                           has_labels=labels is not None, is_sample=is_sample, sample_total=sample_total,
+                           bridge=m.bridge_words(8))
+
+
+@app.route("/visualizations/<token>")
+def visualizations(token):
+    model = MODELS.get(token)
+    if model is None:
+        return jsonify(error="Session expired - re-run the analysis."), 404
+    return jsonify(
+        network=to_b64(network_figure(model, ncol=3, fontsize=8, width_in=12)),
+        bars=to_b64(topic_bars(model, ncols=4)),
+    )
 
 
 @app.route("/infer/<token>", methods=["POST"])

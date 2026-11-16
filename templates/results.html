@@ -1,22 +1,153 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Results – GraphTopic</title><link rel="stylesheet" href="/static/style.css"></head><body>
-<header><div class="wrap"><span class="pill">Results</span><h1>{{ s.n_topics }} topics from {{ "{:,}".format(n_docs) }} documents</h1>
-<p><a href="/" style="color:#fff">&larr; New analysis</a></p></div></header><div class="wrap">
-<div class="card"><h2>Graph &amp; quality summary</h2><div class="stats">
-<div class="stat"><b>{{ s.n_nodes }}</b><span>words (nodes)</span></div><div class="stat"><b>{{ "{:,}".format(s.n_edges) }}</b><span>edges</span></div>
-<div class="stat"><b>{{ s.modularity }}</b><span>modularity Q</span></div><div class="stat"><b>{{ "%.3f"|format(ev.npmi_coherence) }}</b><span>NPMI coherence</span></div>
-<div class="stat"><b>{{ "%.2f"|format(ev.diversity) }}</b><span>topic diversity</span></div>
-{% if has_labels %}<div class="stat"><b>{{ "%.3f"|format(ev.nmi) }}</b><span>NMI vs labels</span></div><div class="stat"><b>{{ "%.1f"|format(ev.purity*100) }}%</b><span>purity</span></div>{% endif %}
-<div class="stat"><b>{{ s.timing.total }}s</b><span>total fit time</span></div></div></div>
-<div class="card"><h2>Extracted topics</h2><div class="topics">
-{% for t in topics %}<div class="topic" style="border-left-color:hsl({{ (t.id*47)%360 }},65%,45%)"><h3>Topic {{ t.id }} · {{ t.label.replace('_',' ') }}</h3>
-<small>{{ t.docs }} documents · {{ t.n_words }} words · NPMI {{ t.npmi }}</small><div style="margin-top:6px">
-{% for w,sc in t.words %}<span class="chip">{{ w.replace('_',' ') }}</span>{% endfor %}</div></div>{% endfor %}</div></div>
-<div class="card"><h2>Word network</h2><img src="data:image/png;base64,{{ net }}" alt="network"></div>
-<div class="card"><h2>Top-word scores per topic</h2><img src="data:image/png;base64,{{ bars }}" alt="bars"></div>
-{% if bridge %}<div class="card"><h2>Bridge words (shared across topics)</h2><p class="hint">Words whose co-occurrence edges are spread over several communities.</p>
-{% for w,p,ts in bridge %}<span class="chip">{{ w.replace('_',' ') }} · {{ "%.2f"|format(p) }}</span>{% endfor %}</div>{% endif %}
-<div class="card"><h2>Try a new document</h2><textarea id="txt" placeholder="Type or paste a document to see its topic distribution…" style="min-height:90px"></textarea>
-<button onclick="inf()">Infer topics</button><div id="out" style="margin-top:12px"></div></div></div>
-<script>async function inf(){const o=document.getElementById('out');const r=await fetch('/infer/{{ token }}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:document.getElementById('txt').value})});const j=await r.json();
-if(j.error){o.innerHTML='<div class="err">'+j.error+'</div>';return}o.innerHTML=j.topics.map(t=>'<div>Topic '+t.id+' · '+t.label+' <b>'+(t.p*100).toFixed(1)+'%</b><div class="bar" style="width:'+t.p*100+'%"></div></div>').join('')}</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10172b">
+  <title>Topics discovered · GraphTopic</title>
+  <link rel="stylesheet" href="/static/style.css?v=4">
+</head>
+<body>
+<header class="results-hero">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="brand-mark">G</span> GraphTopic</a>
+    <div class="results-title"><p class="eyebrow">YOUR ANALYSIS IS READY</p><h1>Here’s what the text is about.</h1>
+      <p>GraphTopic found <b>{{ s.n_topics }} word communities</b> in {{ "{:,}".format(n_docs) }} documents.</p>
+      {% if is_sample %}<p class="hint">Quick demo: a balanced sample of {{ "{:,}".format(n_docs) }} from {{ "{:,}".format(sample_total) }} documents keeps results faster while preserving all 10 subjects.</p>{% endif %}
+    </div>
+    <a class="button button-light button-small" href="/">← Start over</a>
+  </div>
+</header>
+<main class="wrap results-content">
+  <section class="result-explainer"><span class="explainer-spark">✳</span><div><b>How to read this page</b><p>Each card below is one topic. Its words are the words most connected in that group. A document can be assigned to the topic it matches best.</p></div></section>
+
+  <section class="results-section">
+    <div class="section-heading"><div><p class="eyebrow eyebrow-dark">THE DISCOVERIES</p><h2>{{ s.n_topics }} topics found</h2></div><span class="section-caption">Words that belong together, grouped by the model</span></div>
+    <div class="topics">
+      {% for t in topics %}
+      <article class="topic" style="--topic-color:hsl({{ (t.id*47)%360 }},65%,45%)">
+        <div class="topic-heading"><span class="topic-number">{{ "%02d"|format(t.id + 1) }}</span><div><p class="topic-kicker">TOPIC {{ t.id + 1 }}</p><h3>{{ t.label.replace('_',' ') }}</h3></div></div>
+        <div class="topic-words">{% for w,sc in t.words %}<span class="chip">{{ w.replace('_',' ') }}</span>{% endfor %}</div>
+        <div class="topic-footer"><span>{{ "{:,}".format(t.docs) }} documents fit this topic</span><span class="topic-dots" aria-hidden="true">•••</span></div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="try-inference">
+    <div class="inference-copy"><p class="eyebrow eyebrow-dark">A QUICK LIVE DEMO</p><h2>Ask: “Which topic is this about?”</h2>
+      <p>Paste a sentence and GraphTopic will show which discovered topics it matches. This uses the model you just built.</p>
+      <button class="text-button" type="button" onclick="useExample()">Try an example sentence <span aria-hidden="true">↗</span></button>
+    </div>
+    <div class="inference-panel"><label for="txt">Your sentence</label>
+      <textarea id="txt" placeholder="For example: The team scored a goal and won the match."></textarea>
+      <button class="button button-primary" id="infer-button" type="button" onclick="inf()"><span>Find matching topics</span><span aria-hidden="true">→</span></button>
+      <div id="out" class="inference-output" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <details class="technical-details">
+    <summary><span>Curious about the technical results?</span><small>Optional metrics and visualizations</small></summary>
+    <div class="technical-content">
+      <section class="metric-section"><h2>Model and evaluation metrics</h2><p class="hint">These help describe the network and topic quality; you do not need them to explain the main idea.</p>
+        <div class="stats">
+          <div class="stat"><b>{{ s.n_nodes }}</b><span>unique words in network</span></div>
+          <div class="stat"><b>{{ "{:,}".format(s.n_edges) }}</b><span>word connections</span></div>
+          <div class="stat"><b>{{ s.modularity }}</b><span>modularity Q · community separation</span></div>
+          <div class="stat"><b>{{ "%.3f"|format(ev.npmi_coherence) }}</b><span>NPMI · topic word coherence</span></div>
+          <div class="stat"><b>{{ "%.2f"|format(ev.diversity) }}</b><span>topic diversity</span></div>
+          {% if has_labels %}<div class="stat"><b>{{ "%.3f"|format(ev.nmi) }}</b><span>NMI · agreement with sample labels</span></div><div class="stat"><b>{{ "%.1f"|format(ev.purity*100) }}%</b><span>purity · dominant label share</span></div>{% endif %}
+          <div class="stat"><b>{{ s.timing.total }}s</b><span>analysis time</span></div>
+        </div>
+      </section>
+      <p id="visualization-status" class="hint" aria-live="polite">Charts are prepared when you open this section.</p>
+      <section class="visualization"><h2>Word network</h2><p class="hint">Dots represent words. Connections represent words that occur together; colors show detected communities.</p><img id="network-visualization" alt="Word co-occurrence network grouped into detected topics" hidden></section>
+      <section class="visualization"><h2>Most important words</h2><p class="hint">A visual comparison of top-word scores across the discovered topics.</p><img id="bars-visualization" alt="Chart comparing top-word scores across topics" hidden></section>
+      {% if bridge %}<section class="visualization"><h2>Bridge words</h2><p class="hint">Words connected to more than one topic can link different ideas in the text.</p>
+        {% for w,p,ts in bridge %}<span class="chip">{{ w.replace('_',' ') }}</span>{% endfor %}</section>{% endif %}
+    </div>
+  </details>
+
+  <section class="teacher-note results-note">
+    <div class="teacher-icon">✎</div><div><p class="eyebrow eyebrow-dark">YOUR ONE-SENTENCE SUMMARY</p>
+      <p class="teacher-script">“This project turns text into a network of related words, finds groups in that network, and presents each group as a topic.”</p>
+      {% if has_labels %}<p class="hint">The built-in sample is synthetic and has known subject labels. The label-comparison scores shown above apply to this sample, not automatically to every real-world dataset.</p>{% endif %}
+    </div>
+  </section>
+</main>
+<footer><span class="brand-footer">GraphTopic</span><span>Graph-based topic discovery · Manipal University Jaipur</span></footer>
+<script>
+function useExample(){
+  document.getElementById('txt').value='The World Cup match was decisive, and the unbeaten team won the championship.';
+  document.getElementById('txt').focus();
+}
+async function inf(){
+  const output=document.getElementById('out');
+  const button=document.getElementById('infer-button');
+  const text=document.getElementById('txt').value.trim();
+  if(!text){output.textContent='Type a sentence first, or try the example.';output.className='inference-output inline-message';return;}
+  button.disabled=true;
+  button.innerHTML='<span class="spinner" aria-hidden="true"></span><span>Checking…</span>';
+  output.textContent='';
+  try{
+    const response=await fetch('/infer/{{ token }}',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
+    const data=await response.json();
+    if(!response.ok||data.error){output.textContent=data.error||'Could not analyze that sentence. Please try again.';output.className='inference-output inline-message';return;}
+    output.className='inference-output';
+    const intro=document.createElement('p');intro.className='inference-result-title';intro.textContent='This sentence matches these topics:';output.appendChild(intro);
+    data.topics.filter(topic=>topic.p>0).forEach(topic=>{
+      const row=document.createElement('div');row.className='match-row';
+      const label=document.createElement('div');label.className='match-label';
+      const name=document.createElement('span');name.textContent='Topic '+(topic.id+1)+' · '+topic.label;
+      const percent=document.createElement('b');percent.textContent=(topic.p*100).toFixed(1)+'%';
+      label.append(name,percent);
+      const track=document.createElement('div');track.className='match-track';
+      const bar=document.createElement('span');bar.style.width=Math.max(0,Math.min(100,topic.p*100))+'%';track.appendChild(bar);
+      row.append(label,track);output.appendChild(row);
+    });
+  }catch(_error){
+    output.textContent='Could not reach the analysis server. Please try again.';
+    output.className='inference-output inline-message';
+  }finally{
+    button.disabled=false;
+    button.innerHTML='<span>Find matching topics</span><span aria-hidden="true">→</span>';
+  }
+}
+let visualizationsLoaded=false;
+document.querySelector('.technical-details').addEventListener('toggle',async function(){
+  if(!this.open||visualizationsLoaded)return;
+  const status=document.getElementById('visualization-status');
+  status.textContent='Preparing charts…';
+  try{
+    const response=await fetch('/visualizations/{{ token }}');
+    const data=await response.json();
+    if(!response.ok||data.error)throw new Error(data.error||'Could not prepare charts.');
+    document.getElementById('network-visualization').src='data:image/png;base64,'+data.network;
+    document.getElementById('bars-visualization').src='data:image/png;base64,'+data.bars;
+    document.getElementById('network-visualization').hidden=false;
+    document.getElementById('bars-visualization').hidden=false;
+    status.textContent='';
+    visualizationsLoaded=true;
+  }catch(error){
+    status.textContent=error.message||'Could not prepare charts. Please try again.';
+  }
+});
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches&&'IntersectionObserver' in window){
+  const targets=document.querySelectorAll('.result-explainer,.results-section,.topic,.try-inference,.technical-details,.results-note');
+  targets.forEach((element,index)=>{
+    element.classList.add('reveal');
+    element.style.setProperty('--reveal-delay',`${element.classList.contains('topic')?Math.min(index%10,7)*55:0}ms`);
+  });
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12});
+  targets.forEach((element)=>observer.observe(element));
+}
+</script>
+</body>
+</html>

@@ -76,6 +76,11 @@ polysemous words, cross-topic noise, mixed-topic documents). It exists so the sy
 scored against ground-truth labels offline. Results on it show the method works as designed; for
 claims about real-world performance run `--newsgroups` or your own corpus.
 
+The web app uses a deterministic, label-balanced 2,000-document subset of the 12,000-document
+corpus for its quick presentation demo. It caches the computed sample analysis for repeat runs in
+the same process and creates charts only when the technical-results section is opened. Uploaded
+and pasted corpora continue to use the full provided input.
+
 The real-data runner uses all 20 Newsgroups categories after removing headers,
 footers, and quoted text. It applies the fixed 3,000-word cap, 5-document minimum
 frequency, and 50% maximum document frequency; it does not tune on the evaluation
